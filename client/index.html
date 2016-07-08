@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app="fridge">
+  <head>
+    <meta charset="utf-8" />
+    <title>Fridge - Group Task Manager</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+  </head>
+  <body>
+    <h1>Fridge</h1>
+
+    <!-- the ng-view directive is where our templates will be loaded into when navigated to -->
+    <div ui-view></div>
+
+    <script src="lib/node-modules/angular/angular.js"></script>
+    <script src="lib/node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+
+    <script src="app/auth/auth.js"></script>
+    <script src="app/tasks/tasks.js"></script>
+    <script src="app/app.js"></script>
+  </body>
+</html>
