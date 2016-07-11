@@ -1,23 +1,19 @@
 angular.module('tasks', [])
 
-.controller('TasksController', function($scope, Tasks){
+.controller('TasksController', function($scope){
   //will be submitted to server in POST request body containing the new task input data
+    //when ready to send requests to server, add "Tasks" controller as function input variable
   $scope.task={};
 
   $scope.data={
     //example data
-    tasks:[
-      {text: "walk dog"},
-      {text: "take nap"},
-      {text: "go for a run"}
-    ]
+    tasks:[]
   }
 
   $scope.addTask = function(task){
     //make POST request to send new task to database
       //this will be done when backend database is in place
 
-    console.log('Add task worked!');
     $scope.data.tasks.push($scope.task);
     //clear out input field after task has been submitted
     $scope.task = {};

@@ -1,0 +1,12 @@
+.main-logo, .container, .task-input {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.main-logo {
+  margin: 10px;
+}
+
+.task-input {
+  width: 200px;
+}

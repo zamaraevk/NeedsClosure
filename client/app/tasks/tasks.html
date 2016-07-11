@@ -1,12 +1,14 @@
 <div class="container" ng-controller="TasksController">
 
   <form class="task-input" ng-submit="addTask(task.text)">
-    <input type="text" name="newTaskInput"
-    ng-model="task.text" placeholder="Add Task" required
+    <input class="task-input" type="text" name="newTaskInput"
+    ng-model="task.text" placeholder="Add Task and Press Enter" required
     />
 
     <input type="submit"
     value="Add Task"
+    style="position: absolute; left: -9999px; width: 1px; height: 1px;"
+    tabindex="-1"
     />
   </form>
 
