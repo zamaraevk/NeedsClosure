@@ -1,7 +1,6 @@
 var Task = require('./database.js');
 
 /* proper format of task document
-
 var taskSchema = new Schema({
   name: String,
   assignees: Array,
@@ -9,16 +8,12 @@ var taskSchema = new Schema({
   dueDate: Date,
   completed: Boolean
 });
-
-
 Example Task Format that should be passed from front-end:
 {
 	"name": "pick up groceries",
 	"createdAt": new Date(),
 	"completed": false
 })
-
-
 */
 
 var taskFuncs = {
@@ -45,7 +40,7 @@ var taskFuncs = {
 		})
 	},
 	deleteTask: function(id, res){
-		Task.remove({"_id": id}, function (err) { 
+		Task.remove({"_id": id}, function (err) {
 			if(err){
 				console.log("Error: ", err)
 			}

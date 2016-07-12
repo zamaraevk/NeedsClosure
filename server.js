@@ -32,15 +32,14 @@ app.post('/api/tasks', function(req, res){
 
 })
 
-app.delete('/api/tasks', function(req, res){
+app.post('/api/tasks/delete', function(req, res){
+  //console.log('1KONSTANTIN', req.params.id);
 	/* proper format of request:
-
 		{
 			"id": "5783ec2a12cda2db6ce7ac91"
 		}
-
 	*/
-	console.log("request received at deleteTask");
+	console.log("request received at deleteTask", req.body.id);
 	taskFuncs.deleteTask(req.body.id, res);
 })
 

@@ -23,9 +23,23 @@ angular.module('services', [])
     })
   };
 
+  var deleteTask = function(task){
+    console.log("task to delete", JSON.stringify(task));
+     return $http({
+       method: 'POST',
+       url: '/api/tasks/delete',
+       data: JSON.stringify(task)
+     }).then(function(resp){
+       console.log('Task Successfully Deleted.', resp);
+     }).catch(function(err){
+       console.log('Error', err);
+     })
+   };
+
   return {
     fetchAllTasks:fetchAllTasks,
-    addTask: addTask
+    addTask: addTask,
+    deleteTask:deleteTask
   }
 
 })
