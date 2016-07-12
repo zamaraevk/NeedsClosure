@@ -18,6 +18,7 @@ app.listen(process.env.PORT || 3000, function(){
 
 app.get('/api/tasks', function(req, res){
 	//handle getAll tasks
+	console.log("request received at getAllTasks");
 	taskFuncs.getAllTasks(res);
 
 })

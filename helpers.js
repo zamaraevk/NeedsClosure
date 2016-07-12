@@ -26,10 +26,10 @@ var taskFuncs = {
 	getAllTasks: function(res){
 		Task.find({}, function(err, tasks){
 			if(err) {
-				console.log('tasks not fetched');
+				console.log('tasks not fetched', err);
 			}
-		console.log("tasks successfull fetched");
-		res.send(tasks);
+			console.log("tasks successfully fetched");
+			res.send(tasks);
 
 		})
 
