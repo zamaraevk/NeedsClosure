@@ -2,6 +2,7 @@ angular.module('services', [])
 
   //None of these functions will be used until a functioning server is in place.
 .factory('Tasks', function ($http) {
+
   var fetchAllTasks = function(){
       return $http({
         method: 'GET',
@@ -22,9 +23,23 @@ angular.module('services', [])
     })
   };
 
+  var deleteTask = function(task){
+    console.log("task to delete", JSON.stringify(task));
+     return $http({
+       method: 'POST',
+       url: '/api/tasks/delete',
+       data: JSON.stringify(task)
+     }).then(function(resp){
+       console.log('Task Successfully Deleted.', resp);
+     }).catch(function(err){
+       console.log('Error', err);
+     })
+   };
+
   return {
     fetchAllTasks:fetchAllTasks,
-    addTask: addTask
+    addTask: addTask,
+    deleteTask:deleteTask
   }
 
 })
