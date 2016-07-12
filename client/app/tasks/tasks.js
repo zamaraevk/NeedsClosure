@@ -1,24 +1,22 @@
 angular.module('tasks', [])
 
-.controller('TasksController', function($scope){
+.controller('TasksController', function($scope, Tasks){
+
+  angular.extend($scope, Tasks);
   //will be submitted to server in POST request body containing the new task input data
     //when ready to send requests to server, add "Tasks" controller as function input variable
-  $scope.task={};
-
-  $scope.data={
-    //example data
-    tasks:[]
+  $scope.allTasks = [];
+  var x = $scope.fetchAllTasks();
+  console.log(x);
+  $scope.onSubmit = function(input){
+    console.log(input);
+    $scope.send = {
+      	name: input,
+      	createdAt: new Date(),
+      	completed: false
+      };
+    $scope.addTask($scope.send);
   }
-
-  $scope.addTask = function(task){
-    //make POST request to send new task to database
-      //this will be done when backend database is in place
-
-    $scope.data.tasks.push($scope.task);
-    //clear out input field after task has been submitted
-    $scope.task = {};
-  }
-
 })
 
 //The below directive is supposed to enable the submission of text from an input
