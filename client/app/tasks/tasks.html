@@ -1,8 +1,8 @@
 <div class="container" ng-controller="TasksController">
 
-  <form class="task-input" ng-submit="addTask(task.text)">
+  <form class="task-input" ng-submit="onSubmit(input)">
     <input class="task-input" type="text" name="newTaskInput"
-    ng-model="task.text" placeholder="Add Task and Press Enter" required
+    ng-model="input" placeholder="Add Task and Press Enter" required
     />
 
     <input type="submit"
