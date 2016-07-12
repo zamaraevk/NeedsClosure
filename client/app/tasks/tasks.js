@@ -6,8 +6,10 @@ angular.module('tasks', [])
   //will be submitted to server in POST request body containing the new task input data
     //when ready to send requests to server, add "Tasks" controller as function input variable
   $scope.allTasks = [];
+
   var x = $scope.fetchAllTasks();
   console.log(x);
+  
   $scope.onSubmit = function(input){
     console.log(input);
     $scope.send = {
