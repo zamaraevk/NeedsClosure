@@ -36,10 +36,24 @@ angular.module('services', [])
      })
    };
 
+   var completeTask = function(task){
+       return $http({
+         method: 'PUT',
+         url: '/api/tasks',
+         data: task
+       }).then(function(resp){
+         console.log('Task Successfully Deleted.', resp);
+       }).catch(function(err){
+         console.log('Error', err);
+       })
+     }
+
+
   return {
     fetchAllTasks:fetchAllTasks,
     addTask: addTask,
-    deleteTask:deleteTask
+    deleteTask:deleteTask,
+    completeTask: completeTask
   }
 
 })
