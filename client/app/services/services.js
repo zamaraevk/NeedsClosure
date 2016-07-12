@@ -42,7 +42,7 @@ angular.module('services', [])
 
   })
 
-  //These functions can be used to wrap MVP in an authentication service. 
+  //These functions can be used to wrap MVP in an authentication service.
 
   .factory('Auth', function ($http, $location, $window) {
     var signin = function (user) {

@@ -11,7 +11,17 @@ angular.module('fridge', [
       url: '/',
       templateUrl: 'app/tasks/tasks.html',
       controller: 'TasksController'
-    });
+    })
+    .state('/signin', {
+      url: '/signin',
+      templateUrl: 'app/auth/signin.html',
+      controller: 'AuthController'
+    })
+    .state('/signup', {
+      url: '/signup',
+      templateUrl: 'app/auth/signup.html',
+      controller: 'AuthController'
+    })
 })
 
 //THE COMMENTED CODE BELOW WILL BE USED FOR ATTACHING TOKENS TO EACH

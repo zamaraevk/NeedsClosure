@@ -1,23 +1,20 @@
-<div class="signin-container">
-  <form class="signin-form" action="" >
-    <input type="text" name="user" placeholder="Enter Username"> <br>
-    <input type="text" name="pass" placeholder="Enter Password"> <br><br>
-    <input type="submit" name="login" value="Login">
-  </form>
-</div>
-
-<!-- <div id='signin'>
+<div class='signin'>
   <h1>signin</h1>
   <form name="signinForm" class="input" ng-submit='signin()'  novalidate>
 
-    <input ng-class="{'error': signinForm.user.$invalid && !signinForm.user.$pristine}" type='text' ng-model='user.username' name='user'  ng-minlength="6" ng-maxlength="15" required >
-    <p ng-show="signinForm.user.$invalid && !signinForm.user.$pristine">Username must be greater than 5 characters</p>
-
-    <input type="password" ng-class="{'error': signinForm.pass.$invalid && !signinForm.pass.$pristine}" ng-model='user.password' name='pass' ng-minlength="6" ng-maxlength="14" required>
-    <p ng-show="signinForm.pass.$invalid && !signinForm.pass.$pristine">Password must be greater than 5 and less than 15 characters</p>
-
+    <input ng-class="{'error': signinForm.user.$invalid && !signinForm.user.$pristine}"
+    type='text' ng-model='user.username' name='user'  ng-minlength="6" ng-maxlength="15"
+    required>
+    <p class="signin-error" ng-show="signinForm.user.$invalid && !signinForm.user.$pristine">
+      Username invalid
+    </p>
+    <input type="password" ng-class="{'error': signinForm.pass.$invalid && !signinForm.pass.$pristine}"
+    ng-model='user.password' name='pass' ng-minlength="6" ng-maxlength="14" required>
+    <p ng-show="signinForm.pass.$invalid && !signinForm.pass.$pristine">
+      Password must be greater than 5 and less than 15 characters
+    </p>
     <button>signin</button>
 
   </form>
   <a href="#/signup">Don't have an account? <strong>Signup</strong> ...</a>
-</div> -->
+</div>
