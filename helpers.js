@@ -1,4 +1,4 @@
-var Task = require('./database.js');
+var Model = require('./database.js');
 
 /* proper format of task document
 var taskSchema = new Schema({
@@ -19,7 +19,7 @@ Example Task Format that should be passed from front-end:
 var taskFuncs = {
 
 	getAllTasks: function(res){
-		Task.find({}, function(err, tasks){
+		Model.task.find({}, function(err, tasks){
 			if(err) {
 				console.log('tasks not fetched', err);
 			}
@@ -40,7 +40,7 @@ var taskFuncs = {
 		})
 	},
 	deleteTask: function(id, res){
-		Task.remove({"_id": id}, function (err) {
+		Model.task.remove({"_id": id}, function (err) { 
 			if(err){
 				console.log("Error: ", err)
 			}
@@ -49,7 +49,7 @@ var taskFuncs = {
 
 	},
 	completeTask: function(id, res){
-		Task.update({"_id": id}, {
+		Model.task.update({"_id": id}, {
 			completed: true
 
 		}, function(err){
