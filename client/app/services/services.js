@@ -2,6 +2,7 @@ angular.module('services', [])
 
   //None of these functions will be used until a functioning server is in place.
 .factory('Tasks', function ($http) {
+
   var fetchAllTasks = function(){
       return $http({
         method: 'GET',

@@ -22,7 +22,7 @@
   <div class="row">
     <div class="col-sm-3" style="background-color:#eee; height:500px;">
     </div>
-    <div class="col-sm-9" style="background-color:#ccc; height:500px;">
+    <div class="col-sm-9" style="background-color:#ccc;">
 
       <div ng-controller="TasksController">
         <form class="task-input" ng-submit="onSubmit(input)">
@@ -35,12 +35,11 @@
           />
         </form>
 
-
         <div class="task-list">
-          <div class="task" ng-repeat="task in data.tasks">
-            <p>
-              {{task.text}}
-            </p>
+          <div class="task" ng-repeat="task in allTasks | orderBy: '-created_at':true">
+            <div>
+              {{task.name}} -- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
+            </div>
           </div>
         </div>
       </div>
