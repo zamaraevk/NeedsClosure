@@ -9,13 +9,17 @@ app.use(bodyParser.json());
 
 console.log(__dirname + "/node_modules");
 
+
 app.listen(process.env.PORT || 3000, function(){
   console.log('Server is running');
 });
 
 
+
 app.get('/api/tasks', function(req, res){
 	//handle getAll tasks
+	taskFuncs.getAllTasks(res);
+
 })
 
 app.post('/api/tasks', function(req, res){

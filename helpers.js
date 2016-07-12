@@ -23,7 +23,15 @@ Example Task Format that should be passed from front-end:
 
 var taskFuncs = {
 
-	getAllTasks: function(){
+	getAllTasks: function(res){
+		Task.find({}, function(err, tasks){
+			if(err) {
+				console.log('tasks not fetched');
+			}
+		console.log("tasks successfull fetched");
+		res.send(tasks);
+
+		})
 
 	},
 	addTask: function(task) {
