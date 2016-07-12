@@ -32,6 +32,11 @@ angular.module('tasks', [])
     //update task list
     $scope.getData();
   }
+
+  $scope.deleteById = function(task){
+    $scope.deleteTask({id: task});
+    $scope.getData();
+  }
 })
 
 //The below directive is supposed to enable the submission of text from an input
