@@ -3,6 +3,18 @@ var taskFuncs = require('./helpers.js');
 var bodyParser = require('body-parser');
 var app = express();
 
+//db test
+// var db = require('./database.js'); 
+
+// var user = new db.user({username: 'kenton', password: 'kenton1' })
+// 	user.save(function(err){
+// 			if(err) {
+// 				console.log("error:", err);
+// 			}
+// 			console.log("User Added!", user); 
+// 		})
+// DB test 
+
 app.use(express.static(__dirname + "/client"));
 app.use(express.static(__dirname + "/node_modules"));
 app.use(bodyParser.json());
@@ -27,6 +39,7 @@ app.post('/api/tasks', function(req, res){
 	//handle add task
 	//need to check format of req.body
 	//need to have proper res.end (should send 201)
+
 	var task = req.body;
 	taskFuncs.addTask(task, res);
 
