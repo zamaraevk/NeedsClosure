@@ -1,4 +1,4 @@
-.main-logo, .container, .task-input {
+.main-logo, .task-input {
   margin: 0 auto;
   text-align: center;
 }
@@ -8,5 +8,17 @@
 }
 
 .task-input {
-  width: 200px;
+  font-size: 24px;
+  padding: 20px;
+  width: 400px;
+}
+.task-list {
+  text-align: center;
+}
+.task {
+  margin: 3px;
+  border-color: #fff;
+  font-size: 24px;
+  height: 50px;
+  border: 1px solid #eee;
 }
