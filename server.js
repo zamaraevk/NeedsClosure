@@ -31,6 +31,12 @@ app.post('/api/signup', function(req, res, next){
 	taskFuncs.signup(newUser, res, next);
 })
 
+app.get('/api/signedin', function(req, res, next){
+	//see helpers.js for format of request. It checks the req.headers['x-access-token']
+	console.log("signedIn request received");
+	taskFuncs.checkAuth(req, res, next);
+})
+
 app.post('/api/signin', function(req, res, next){
 	console.log("sign-in request received");
 	// format of request object is same as signup
@@ -45,7 +51,6 @@ app.get('/api/tasks', function(req, res){
 	taskFuncs.getAllTasks(res);
 
 })
-
 
 app.post('/api/tasks', function(req, res){
 	//handle add task
