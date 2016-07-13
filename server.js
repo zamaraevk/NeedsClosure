@@ -21,14 +21,22 @@ app.post('/api/signup', function(req, res, next){
 	proper format of request (password is in plain-text when passed from front-end):
 
 	{
-		"username": "harish",
-    "password": "abc123"
+			"username": "harish",
+	    "password": "abc123"
 
 	}
 
 	*/
 	var newUser = req.body;
 	taskFuncs.signup(newUser, res, next);
+})
+
+app.post('/api/signin', function(req, res, next){
+	console.log("sign-in request received");
+	// format of request object is same as signup
+	var user  = req.body;
+	taskFuncs.signin(user, res, next);
+
 })
 
 app.get('/api/tasks', function(req, res){
@@ -43,6 +51,7 @@ app.post('/api/tasks', function(req, res){
 	//handle add task
 	//need to check format of req.body
 	//need to have proper res.end (should send 201)
+	console.log('request received at addTask');
 
 	var task = req.body;
 	taskFuncs.addTask(task, res);
