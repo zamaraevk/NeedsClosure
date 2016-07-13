@@ -58,9 +58,31 @@ var taskFuncs = {
 			}
 			res.send("task marked as complete");
 		});
-	}
+	},
 
+	signup: function(newUser, res, next) {
+		Model.user.find({"username": newUser.username}, function(err, user){
+			if(err) {
+				console.log("Error: ", error);
+			}
+			if(!user.length) { //if a user is not found, an empty array is returned
+				console.log("user does NOT already exist");
+				var user = new Model.user(newUser);
+				user.save(function(err){
+					if(err) {
+						console.log("new user not saved", err);
+					}
+				res.send("user saved");
+			})
 
+			}
+			else {
+				console.log("user already exists: ", user);
+				next(new Error("user already exists"));
+			}
+		})
+	}		
 }
+
 
 module.exports = taskFuncs;
