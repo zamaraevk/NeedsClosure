@@ -2,7 +2,7 @@ angular.module('tasks', [])
 
 .controller('TasksController', function($scope, Tasks){
 
-  angular.extend($scope, Tasks, Auth);
+  angular.extend($scope, Tasks);
   //will be submitted to server in POST request body containing the new task input data
     //when ready to send requests to server, add "Tasks" controller as function input variable
   $scope.allTasks = [];
