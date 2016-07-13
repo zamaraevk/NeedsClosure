@@ -3,18 +3,6 @@ var taskFuncs = require('./helpers.js');
 var bodyParser = require('body-parser');
 var app = express();
 
-//db test
-// var db = require('./database.js'); 
-
-// var user = new db.user({username: 'kenton', password: 'kenton1' })
-// 	user.save(function(err){
-// 			if(err) {
-// 				console.log("error:", err);
-// 			}
-// 			console.log("User Added!", user); 
-// 		})
-// DB test 
-
 app.use(express.static(__dirname + "/client"));
 app.use(express.static(__dirname + "/node_modules"));
 app.use(bodyParser.json());
@@ -27,6 +15,21 @@ app.listen(process.env.PORT || 3000, function(){
 });
 
 
+app.post('/api/signup', function(req, res){
+	//add new user
+	/* 
+	proper format of request (password is in plain-text when passed from front-end):
+
+	{
+		"username": "harish",
+    "password": "abc123"
+
+	}
+
+	*/
+	var newUser = req.body;
+	taskFuncs.signup(newUser, res);
+})
 
 app.get('/api/tasks', function(req, res){
 	//handle getAll tasks
@@ -34,6 +37,7 @@ app.get('/api/tasks', function(req, res){
 	taskFuncs.getAllTasks(res);
 
 })
+
 
 app.post('/api/tasks', function(req, res){
 	//handle add task

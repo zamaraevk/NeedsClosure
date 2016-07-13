@@ -14,7 +14,7 @@
   "dependencies": {
     "angular-ui-router": "^0.3.1",
     "body-parser": "^1.5.2",
-    "bcrypt-nodejs": "0.0.3",
+    "bcrypt": "latest",
     "ejs": "^2.4.2",
     "express": "^4.14.0",
     "bootstrap": "^3.3.6",

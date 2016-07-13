@@ -58,6 +58,16 @@ var taskFuncs = {
 			}
 			res.send("task marked as complete");
 		});
+	},
+
+	signup: function(newUser, res) {
+		var user = new Model.user(newUser);
+		user.save(function(err){
+			if(err) {
+				console.log("new user not saved", err);
+			}
+			res.send("user saved");
+		})
 	}
 
 
