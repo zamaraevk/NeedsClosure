@@ -24,4 +24,9 @@ angular.module('auth', [])
         console.error(error);
       });
   };
+  //When 'logout' is clicked, signout() function removes token from local storage
+  //and redirects user to /signin
+  $scope.signout = function(){
+    Auth.signout();
+  };
 });

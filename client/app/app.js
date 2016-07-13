@@ -1,7 +1,8 @@
 angular.module('fridge', [
   'tasks',
   'services',
-  'ui.router'
+  'ui.router',
+  'auth'
 ])
 
 // ui router for single-app
