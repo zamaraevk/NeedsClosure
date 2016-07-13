@@ -92,7 +92,9 @@ app.put('/api/tasks', function(req, res){
 	taskFuncs.completeTask(req.body.id, res);
 })
 
-app.put('/api/tasks/edit', function(req, res, next){
+app.put('/api/tasks/edit', function(req, res, next){        
+	//handle edit of the task name 
+	// needs the request body and id 
 	console.log("task was updated", req.body); 
 	taskFuncs.editTask(req.body._id, req.body, res, next); 
 })

@@ -75,7 +75,8 @@ var taskFuncs = {
 	editTask: function(id, edited, res){
 		console.log("request id", id);
 		console.log("edit body", edited);
-
+		// updates the task name based on the request body and the id associated with it. 
+		
 		Model.task.update({"_id": id}, {
 			name: edited.name
 
@@ -86,24 +87,6 @@ var taskFuncs = {
 			res.send("task was updated"); 
 		});
 	},
-	// editTask: function(id, edited, res, next){
-	// 	Model.task.findById(id, function(err, found) {
-	// 		if(!found) {
-	// 			console.log("user not found"); 
-	// 			next(new Error("user was not found"));
-	// 		}
-	// 		else {
-	// 			found.name = edited; 
-	// 			found.save(function(err) {
-	// 				if(err) {
-	// 					console.log("error"); 
-	// 				}else {
-	// 					res.send("success"); 
-	// 				}
-	// 			})
-	// 		}
-	// 	})
-	// }
 
 	signup: function(newUser, res, next) {
 		Model.user.find({"username": newUser.username}, function(err, user){
