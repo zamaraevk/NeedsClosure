@@ -15,7 +15,7 @@ app.listen(process.env.PORT || 3000, function(){
 });
 
 
-app.post('/api/signup', function(req, res){
+app.post('/api/signup', function(req, res, next){
 	//add new user
 	/* 
 	proper format of request (password is in plain-text when passed from front-end):
@@ -28,7 +28,7 @@ app.post('/api/signup', function(req, res){
 
 	*/
 	var newUser = req.body;
-	taskFuncs.signup(newUser, res);
+	taskFuncs.signup(newUser, res, next);
 })
 
 app.get('/api/tasks', function(req, res){
