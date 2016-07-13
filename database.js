@@ -25,6 +25,13 @@ var UserSchema = new Schema({
 	// friends: [userSchema]
 }); 
 
+UserSchema.methods.comparePassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) return cb(err);
+        cb(null, isMatch);
+    });
+};
+
 UserSchema.pre('save', function(next) {
     var user = this;
 
@@ -46,13 +53,6 @@ bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
 });
 
 });
-
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-        if (err) return cb(err);
-        return cb(null, isMatch);
-    });
-};
 
 
 var User = mongoose.model('User', UserSchema);

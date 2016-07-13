@@ -30,7 +30,7 @@ var taskFuncs = {
 
 	},
 	addTask: function(task, res) {
-		var newTask = new Task(task);
+		var newTask = new Model.task(task);
 		newTask.save(function(err){
 			if(err) {
 				console.log("error:", err);
@@ -92,15 +92,14 @@ var taskFuncs = {
 				next(new Error("username does not exist"));
 			}
 			else{ //if user found
-				console.log("user found:", user);
-				user.comparePassword(reqUser.password, function(err, isMatch){
+				user[0].comparePassword(reqUser.password, function(err, isMatch){
 					if(err) {throw err;}
 					if(!isMatch){
-						next(new Error("Incorrect password"))
+						next(new Error("Incorrect password")) //will send an error if incorrect password
 					}
 					else{
 						console.log("password correct!");
-						res.send(isMatch);
+						res.send(isMatch); //will send true to client if inputted password matches the password in the database
 					}
 				})
 			}
