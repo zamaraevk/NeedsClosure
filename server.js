@@ -81,4 +81,9 @@ app.put('/api/tasks', function(req, res){
 	taskFuncs.completeTask(req.body.id, res);
 })
 
+app.put('/api/tasks/edit', function(req, res, next){
+	console.log("task was updated", req.body); 
+	taskFuncs.editTask(req.body._id, req.body, res, next); 
+})
+
 module.exports = app;
