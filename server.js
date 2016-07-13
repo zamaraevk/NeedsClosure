@@ -22,13 +22,20 @@ app.post('/api/signup', function(req, res, next){
 
 	{
 		"username": "harish",
-    "password": "abc123"
+	    "password": "abc123"
 
 	}
 
 	*/
 	var newUser = req.body;
 	taskFuncs.signup(newUser, res, next);
+})
+
+app.post('/api/signin', function(req, res, next){
+	console.log("sign-in request received");
+	var user  = req.body;
+	taskFuncs.signin(user, res, next);
+
 })
 
 app.get('/api/tasks', function(req, res){

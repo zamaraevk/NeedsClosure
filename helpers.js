@@ -81,7 +81,33 @@ var taskFuncs = {
 				next(new Error("user already exists"));
 			}
 		})
-	}		
+	},
+
+	signin: function(reqUser, res, next){
+		Model.user.find({"username": reqUser.username}, function(err, user){
+			if(err){ //if error in query
+				next("Error: ", error);
+			}
+			if(!user.length){ //if user not found
+				next(new Error("username does not exist"));
+			}
+			else{ //if user found
+				console.log("user found:", user);
+				user.comparePassword(reqUser.password, function(err, isMatch){
+					if(err) {throw err;}
+					if(!isMatch){
+						next(new Error("Incorrect password"))
+					}
+					else{
+						console.log("password correct!");
+						res.send(isMatch);
+					}
+				})
+			}
+		})
+	}
+
+
 }
 
 

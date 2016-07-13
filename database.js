@@ -17,15 +17,15 @@ var taskSchema = new Schema({
 var Task = mongoose.model('Task', taskSchema);
 
 //User schema 
-var userSchema = new Schema({
+var UserSchema = new Schema({
 	username: { type: String, required: true, index: { unique: true } },
-    password: { type: String, required: true },
+  password: { type: String, required: true },
 	token: String, 
 	tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}] 
 	// friends: [userSchema]
 }); 
 
-userSchema.pre('save', function(next) {
+UserSchema.pre('save', function(next) {
     var user = this;
 
 // only hash the password if it has been modified (or is new)
@@ -47,15 +47,15 @@ bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
 
 });
 
-userSchema.methods.comparePassword = function(candidatePassword, cb) {
+UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
         if (err) return cb(err);
-        cb(null, isMatch);
+        return cb(null, isMatch);
     });
 };
 
 
-var User = mongoose.model('User', userSchema);
+var User = mongoose.model('User', UserSchema);
 
 
 module.exports = {user: User, task: Task}; 
