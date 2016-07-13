@@ -30,7 +30,7 @@ var taskFuncs = {
 
 	},
 	addTask: function(task, res) {
-		var newTask = new Task(task);
+		var newTask = new Model.task(task);
 		newTask.save(function(err){
 			if(err) {
 				console.log("error:", err);
