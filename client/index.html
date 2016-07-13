@@ -32,13 +32,18 @@
     </nav>
 
     <div class="container-fluid">
-      <div class="sidebar" style="background-color:#eee; height:500px;"></div>
-        <nav>
-          <ul class="sidebar-constants">
-            <li>General</li>
-            <li>Projects</li>
-          </ul>
+      <div class="sidebar" style="background-color:#eee; height:500px;">
+        <nav class="sidebar-constants">
+          <br><br>
+          <a class="sidebar-general" href="#">General</a> <br><br>
+          <a class="sidebar-projects" href="#">Projects   
+            <a href="#">+</a>
+            <br>
+            <ul class="projects-names">
+            </ul>
+          </a>
         </nav>
+      </div>
       <div ui-view></div>
     </div>
 
