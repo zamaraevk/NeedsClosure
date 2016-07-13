@@ -20,25 +20,26 @@ angular.module('tasks', [])
 
 
   $scope.onSubmit = function(input){
-    console.log(input);
     $scope.send = {
       	name: input,
       	createdAt: new Date(),
       	completed: false
       };
-    $scope.addTask($scope.send);
-    //clear input after task has been added
-    $scope.input = null;
-    //update task list
-    $scope.getData();
+    $scope.addTask($scope.send, function(resp){
+      //clear input after task has been added
+      $scope.input = null;
+      //update task list
+      $scope.getData();
+    })
   }
-
   $scope.deleteById = function(task){
-    $scope.deleteTask({id: task});
-    $scope.getData();
+    $scope.deleteTask({id: task}, function(resp){
+      $scope.getData();
+    });
   }
   $scope.complete = function(task){
-    $scope.completeTask({id: task});
-    $scope.getData();
+    $scope.completeTask({id: task}, function(resp){
+      $scope.getData();
+    });
   }
 })

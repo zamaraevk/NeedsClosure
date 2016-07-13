@@ -11,37 +11,39 @@ angular.module('services', [])
       })
     };
 
-  var addTask = function(task){
+  var addTask = function(task, callback){
     console.log('working', task);
     return $http({
       method: 'POST',
       url: '/api/tasks',
       data: task
     }).then(function(resp){
-      console.log('Task Successfully Added.');
+      //using callback to update our tasks ONLY after respond
+      callback(resp);
     })
   };
 
-  var deleteTask = function(task){
-    console.log("task to delete", JSON.stringify(task));
+  var deleteTask = function(task, callback){
      return $http({
        method: 'POST',
        url: '/api/tasks/delete',
        data: JSON.stringify(task)
      }).then(function(resp){
-       console.log('Task Successfully Deleted.', resp);
+       //using callback to update our tasks ONLY after respond
+       callback(resp);
      }).catch(function(err){
        console.log('Error', err);
      })
    };
 
-   var completeTask = function(task){
+   var completeTask = function(task, callback){
        return $http({
          method: 'PUT',
          url: '/api/tasks',
          data: task
        }).then(function(resp){
-         console.log('Task Successfully Deleted.', resp);
+         //using callback to update our tasks ONLY after respond
+         callback(resp);
        }).catch(function(err){
          console.log('Error', err);
        })
