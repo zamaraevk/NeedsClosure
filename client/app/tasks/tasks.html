@@ -1,66 +1,39 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Fridge</a>
+<div class="col-sm-9">
+  <div ng-controller="TasksController">
+    <div class="task-input">
+      <form class="form-inline" ng-submit="onSubmit(input)">
+        <div class="form-group">
+          <input type="text" ng-model="input" class="form-control" placeholder="Add New Task">
+        </div>
+        <button type="submit" class="btn btn-default" value="Add Task">Add Task</button>
+      </form>
     </div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right" ng-controller="AuthController">
-        <!-- clicking on 'logout' redirects user to login and removes session token from local storage -->
-        <li><a href="#" ng-click="signout()">Signout</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3" style="background-color:#eee; height:500px;">
-    </div>
-    <div class="col-sm-9" style="background-color:#ccc;">
+    <h2>Current Tasks</h2>
+    <div class="task-list">
+      <div class="task" ng-repeat="task in allTasks | filter:{completed:false} | orderBy: '-created_at':true">
 
-      <div ng-controller="TasksController">
-        <div class="task-input">
-          <form class="form-inline" ng-submit="onSubmit(input)">
-            <div class="form-group">
-              <input type="text" ng-model="input" class="form-control" placeholder="Add New Task">
-            </div>
-            <button type="submit" class="btn btn-default" value="Add Task">Add Task</button>
-          </form>
-        </div>
-        <h2>Current Tasks</h2>
-        <div class="task-list">
-          <div class="task" ng-repeat="task in allTasks | filter:{completed:false} | orderBy: '-created_at':true">
+          {{task.name}} --- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
 
-              {{task.name}} --- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
-
-            <span data="{{task._id}}" ng-click="deleteById(task._id)" style="float:right"><button class="btn btn-default">Delete</button></span>
-            <span data="{{task._id}}" ng-click="complete(task._id)" style="float:right"><button class="btn btn-default">Complete</button></span>
-          </div>
-        </div>
-
-        <hr style="background-color:black; height:5px;">
-
-        <h2>Completed Tasks</h2>
-        <div class="task-list">
-          <div class="task" ng-repeat="task in allTasks | filter:{completed:true} | orderBy: '-created_at':true">
-            <span data="{{task._id}}" ng-click="complete(task._id)" class="status">Status: {{task.completed}} //  </span>
-              {{task.name}} --- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
-            <span data="{{task._id}}" ng-click="deleteById(task._id)" style="float:right"><button class="btn btn-default">Delete</button></span>
-          </div>
-        </div>
-
+        <span data="{{task._id}}" ng-click="deleteById(task._id)" style="float:right"><button class="btn btn-default">Delete</button></span>
+        <span data="{{task._id}}" ng-click="complete(task._id)" style="float:right"><button class="btn btn-default">Complete</button></span>
       </div>
-
     </div>
+
+    <hr style="background-color:black; height:5px;">
+
+    <h2>Completed Tasks</h2>
+    <div class="task-list">
+      <div class="task" ng-repeat="task in allTasks | filter:{completed:true} | orderBy: '-created_at':true">
+        <span data="{{task._id}}" ng-click="complete(task._id)" class="status">Status: {{task.completed}} //  </span>
+          {{task.name}} --- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
+        <span data="{{task._id}}" ng-click="deleteById(task._id)" style="float:right"><button class="btn btn-default">Delete</button></span>
+      </div>
+    </div>
+
   </div>
+
 </div>
+
 
 <!-- style="position: absolute; left: -9999px; width: 1px; height: 1px;" -->
 <!-- tabindex="-1" -->
