@@ -4,6 +4,8 @@ angular.module('fridge', [
   'ui.router'
 ])
 
+// ui router for single-app
+
 .config(function($stateProvider, $urlRouterProvider){
   $urlRouterProvider.otherwise("/");
   $stateProvider
@@ -24,26 +26,25 @@ angular.module('fridge', [
     })
 })
 
-//THE COMMENTED CODE BELOW WILL BE USED FOR ATTACHING TOKENS TO EACH
-//USER SESSION
+// CODE BELOW WILL BE USED FOR ATTACHING TOKENS TO EACH USER SESSION
 
-// .factory('AttachTokens', function ($window) {
-//   var attach = {
-//     request: function (object) {
-//       var jwt = $window.localStorage.getItem('com.shortly');
-//       if (jwt) {
-//         object.headers['x-access-token'] = jwt;
-//       }
-//       object.headers['Allow-Control-Allow-Origin'] = '*';
-//       return object;
-//     }
-//   };
-//   return attach;
-// })
-// .run(function ($rootScope, $location, Auth) {
-//   $rootScope.$on('$routeChangeStart', function (evt, next, current) {
-//     if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
-//       $location.path('/signin');
-//     }
-//   });
-// });
+.factory('AttachTokens', function ($window) {
+  var attach = {
+    request: function (object) {
+      var jwt = $window.localStorage.getItem('com.shortly');
+      if (jwt) {
+        object.headers['x-access-token'] = jwt;
+      }
+      object.headers['Allow-Control-Allow-Origin'] = '*';
+      return object;
+    }
+  };
+  return attach;
+})
+.run(function ($rootScope, $location, Auth) {
+  $rootScope.$on('$routeChangeStart', function (evt, next, current) {
+    if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
+      $location.path('/signin');
+    }
+  });
+});
