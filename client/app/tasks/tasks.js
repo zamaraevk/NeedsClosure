@@ -42,34 +42,3 @@ angular.module('tasks', [])
     $scope.getData();
   }
 })
-
-//The below directive is supposed to enable the submission of text from an input
-//field to be achived with the "Enter" keyPress
-
-// .directive('myEnter', function () {
-//     return function (scope, element, attrs) {
-//         element.bind("keydown keypress", function (event) {
-//             if(event.which === 13) {
-//                 scope.$apply(function (){
-//                     scope.$eval(attrs.myEnter);
-//                 });
-//
-//                 event.preventDefault();
-//             }
-//         });
-//     };
-// });
-
-//Another option for the above mentioned "Enter" keyPress submission
-
-// $('input').keypress(function (e) {
-//     if (e.which === 13) {
-//       window.visitor = 'guest';
-//       if (!streams.users[window.visitor]) {
-//         streams.users[window.visitor] = [];
-//       }
-//       writeTweet($(this).val());
-//       $(this).val('');
-//       printTweets('all');
-//     }
-//   });

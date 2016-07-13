@@ -61,7 +61,7 @@ angular.module('services', [])
   var signin = function (user) {
     return $http({
       method: 'POST',
-      url: '/api/users/signin',
+      url: '/api/signin',
       data: user
     })
     .then(function (resp) {
@@ -72,7 +72,7 @@ angular.module('services', [])
   var signup = function (user) {
     return $http({
       method: 'POST',
-      url: '/api/users/signup',
+      url: '/api/signup',
       data: user
     })
     .then(function (resp) {
@@ -81,11 +81,11 @@ angular.module('services', [])
   };
 
   var isAuth = function () {
-    return !!$window.localStorage.getItem('com.shortly');
+    return !!$window.localStorage.getItem('com.fridge');
   };
 
   var signout = function () {
-    $window.localStorage.removeItem('com.shortly');
+    $window.localStorage.removeItem('com.fridge');
     $location.path('/signin');
   };
 

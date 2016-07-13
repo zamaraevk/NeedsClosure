@@ -6,7 +6,7 @@ angular.module('fridge', [
 
 // ui router for single-app
 
-.config(function($stateProvider, $urlRouterProvider){
+.config(function($stateProvider, $urlRouterProvider, $httpProvider){
   $urlRouterProvider.otherwise("/");
   $stateProvider
     .state('/', {
@@ -24,9 +24,12 @@ angular.module('fridge', [
       templateUrl: 'app/auth/signup.html',
       controller: 'AuthController'
     })
+
+    $httpProvider.interceptors.push('AttachTokens');
 })
 
 // CODE BELOW WILL BE USED FOR ATTACHING TOKENS TO EACH USER SESSION
+// AND TO VERIFY THAT A USER IS AUTHORIZED EVERY TIME THE ROUTE CHANGES
 
 .factory('AttachTokens', function ($window) {
   var attach = {
