@@ -1,4 +1,6 @@
 var Model = require('./database.js');
+var jwt  = require('jwt-simple');
+
 
 /* proper format of task document
 var taskSchema = new Schema({
@@ -104,7 +106,9 @@ var taskFuncs = {
 				})
 			}
 		})
-	}
+	}, 
+
+	checkAuth: function()
 
 
 }
