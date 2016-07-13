@@ -16,6 +16,7 @@
     "body-parser": "^1.5.2",
     "bcrypt": "latest",
     "ejs": "^2.4.2",
+    "jwt-simple": "^0.2.0",
     "express": "^4.14.0",
     "bootstrap": "^3.3.6",
     "jquery": "1.9.1",

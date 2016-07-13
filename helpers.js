@@ -1,4 +1,6 @@
 var Model = require('./database.js');
+var jwt  = require('jwt-simple');
+
 
 /* proper format of task document
 var taskSchema = new Schema({
@@ -72,7 +74,10 @@ var taskFuncs = {
 					if(err) {
 						console.log("new user not saved", err);
 					}
-				res.send("user saved");
+				console.log("new user saved");
+				var token = jwt.encode(user, 'secret');
+        res.json({token: token}); //will create and send new token
+				// res.send("new user saved");
 			})
 
 			}
@@ -99,14 +104,37 @@ var taskFuncs = {
 					}
 					else{
 						console.log("password correct!");
-						res.send(isMatch); //will send true to client if inputted password matches the password in the database
+						var token = jwt.encode(user[0], 'secret');
+            res.json({token: token}); //will create and send new token
+						// res.send(isMatch); //will send true to client if inputted password matches the password in the database
 					}
 				})
 			}
 		})
+	}, 
+
+	checkAuth: function(req, res, next){
+		var token = req.headers['x-access-token'];
+    if (!token) {
+      next(new Error('No token'));
+    } 
+    else {
+      var user = jwt.decode(token, 'secret');
+      console.log("Decoded user:", user);
+      Model.user.find(user, function(err, user){
+      	if(err){
+      		next("Error: ", error);
+      	}
+      	if(!user.length){ //user not found
+      		res.status(401).send();
+      	}
+      	else{ //token decoded and user found in database
+      		console.log("user authenticated")
+      		res.status(200).send();
+      	}
+      });
+    }
 	}
-
-
 }
 
 
