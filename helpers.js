@@ -88,6 +88,19 @@ var taskFuncs = {
 		});
 	},
 
+	// add User to Group 
+	// adds a specified userId to a given group by passing in groupId and userId. 
+	addUserToGroup: function(userId, groupId, res){
+		Model.group.findOne({"_id": groupId}, function(error, group) {
+			if(error){
+				console.log("The group was not found", error); 
+			}
+			group.users.push(userId); 
+			res.send("UserId: " + userId + " was added to group: ", group)
+		})
+	}, 
+	//
+
 	signup: function(newUser, res, next) {
 		Model.user.find({"username": newUser.username}, function(err, user){
 			if(err) {

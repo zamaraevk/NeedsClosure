@@ -26,6 +26,15 @@ var UserSchema = new Schema({
 	// groups: [type: Schema.Types.ObjectID, ref: 'Group']
 }); 
 
+//User group schema 
+var groupSchema = new Schema({
+  users:[{type: Schema.Types.ObjectId, ref: 'User'}]
+  tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}]
+});
+
+var Group = mongoose.model('Group', groupSchema); 
+//
+
 UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
         if (err) return cb(err);
@@ -68,4 +77,4 @@ var User = mongoose.model('User', UserSchema);
 // var Group = mongoose.model('Group', GroupSchema);
 
 
-module.exports = {user: User, task: Task}; 
+module.exports = {user: User, task: Task, group: Group}; 
