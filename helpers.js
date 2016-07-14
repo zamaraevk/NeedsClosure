@@ -20,6 +20,16 @@ Example Task Format that should be passed from front-end:
 
 var taskFuncs = {
 
+	getUserTasks: function(user, res){
+		Model.task.find({"owner": user}, function(err, tasks){
+			if(err){
+				console.log("tasks not fetched", err);
+			}
+			console.log("tasks", tasks);
+			res.send(tasks);
+		});
+	},
+
 	getAllTasks: function(res){
 		Model.task.find({}, function(err, tasks){
 			if(err) {
@@ -31,7 +41,7 @@ var taskFuncs = {
 		})
 
 	},
-	addTask: function(task, res) {
+	addTask: function(task, owner, res) {
 		var newTask = new Model.task(task);
 		newTask.save(function(err){
 			if(err) {
@@ -137,6 +147,7 @@ var taskFuncs = {
 					else{
 						console.log("password correct!");
 						var token = jwt.encode(user[0], 'secret'); //create new token
+						// console.log("type of ID", typeof user._id);
             res.json({"token": token, "user": {"id": user[0]._id, "username": user[0].username}}); //send new token and user object
 						// res.send(isMatch); //will send true to client if inputted password matches the password in the database
 					}
