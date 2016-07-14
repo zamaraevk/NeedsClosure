@@ -7,10 +7,11 @@ mongoose.connect('mongodb://needsclosure:needsclosure1@ds021289.mlab.com:21289/n
 
 var taskSchema = new Schema({
   name: String,
+  owner: {type: Schema.Types.ObjectId, ref: 'User'},
   createdAt: Date,
   dueDate: Date,
-  completed: Boolean,
-  users: [{type: Schema.Types.ObjectId, ref: 'User'}]
+  completed: Boolean
+  // group: [{type: Schema.Types.ObjectId, ref: 'Group'}] 
 });
 
 
@@ -22,7 +23,7 @@ var UserSchema = new Schema({
   password: { type: String, required: true },
 	token: String, 
 	tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}] 
-	// friends: [userSchema]
+	// groups: [type: Schema.Types.ObjectID, ref: 'Group']
 }); 
 
 UserSchema.methods.comparePassword = function(candidatePassword, cb) {
@@ -56,6 +57,15 @@ bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
 
 
 var User = mongoose.model('User', UserSchema);
+
+// var GroupSchema = new Schema({
+//   name: String,
+//   members: [type: Schema.Types.ObjectId, ref: 'User'],
+//   tasks: [type: Schema.Types.ObjectID, ref: 'Task']
+
+// })
+
+// var Group = mongoose.model('Group', GroupSchema);
 
 
 module.exports = {user: User, task: Task}; 

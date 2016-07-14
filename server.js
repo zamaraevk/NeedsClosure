@@ -47,9 +47,19 @@ app.post('/api/signin', function(req, res, next){
 
 app.get('/api/tasks', function(req, res){
 	//handle getAll tasks
-	console.log("request received at getAllTasks");
 	taskFuncs.getAllTasks(res);
+})
 
+app.post('/api/usertasks', function(req, res){
+	/* proper format of request
+	{
+		"user": "5787b4442cb0dadd096e94d7" // this is the same ID you received when the user signs in
+	}
+
+	*/
+	console.log("request received at usertasks for: ", req.body.user);
+	var user = req.body.user;
+	taskFuncs.getUserTasks(user, res);
 })
 
 app.post('/api/tasks', function(req, res){
@@ -57,9 +67,10 @@ app.post('/api/tasks', function(req, res){
 	//need to check format of req.body
 	//need to have proper res.end (should send 201)
 	console.log('request received at addTask');
-
+	console.log("incoming task", req.body);
 	var task = req.body;
-	taskFuncs.addTask(task, res);
+	var owner = req.body.userID;
+	taskFuncs.addTask(task, owner, res);
 
 })
 
