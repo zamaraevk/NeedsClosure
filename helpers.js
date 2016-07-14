@@ -109,7 +109,7 @@ var taskFuncs = {
 					}
 				console.log("new user saved");
 				var token = jwt.encode(user, 'secret');
-        res.json({token: token}); //will create and send new token
+        res.json({"token": token, "user": user}); //will create and send new token
 				// res.send("new user saved");
 			})
 
@@ -137,8 +137,8 @@ var taskFuncs = {
 					}
 					else{
 						console.log("password correct!");
-						var token = jwt.encode(user[0], 'secret');
-            res.json({token: token}); //will create and send new token
+						var token = jwt.encode(user[0], 'secret'); //jwt is javascript web token --> creates new token
+            res.json({"token": token, "user": user[0]}); //send new token
 						// res.send(isMatch); //will send true to client if inputted password matches the password in the database
 					}
 				})
