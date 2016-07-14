@@ -1,26 +1,37 @@
-<!-- general HTML template for all groups -->
-<!--
+<!-- general HTML template for all groups
+
   Main idea of the project view is to resemble a pinboard that would be used to
   create a project. This pinboard includes general tasks that are essential to the project,
   such as 'create db that responds to requests from the client'. Then, a project member
   is able to further break down the general tasks by category, such as 'frontend' and 'backend'.
 
   Tasks can be given further detail, including:
-    -Priority
-
-  Includes:
-
-  1. Name of project
-  2. Input field to add general tasks to project pinboard
-    a. same addTask function used here as with general tasks, however
-      group ID included in body of POST -OR- in the URI
-  3. Feature to add new member to project
-    a. input field that searches by username
-      - sends a GET request to server with input value
-  4. Input field to add new category to pinboard (not priority) -->
+    -Priority -->
 
   <div class="proj-container">
-
-    
-
+    <nav>
+      <!-- 1. Name of project -->
+      <div class="project-logo">Project Name Here</div>
+    </nav>
+    <!-- 4. Input field to add new category to pinboard (not priority) -->
+    <span>Add New Category</span>
+    <!-- 3. Feature to add new member to project
+      a. input field that searches by username -->
+    <form class="" action="index.html" method="post">
+      <!-- sends a GET request to server with input value on submit-->
+      <input type="text" name="proj-add-member-input" value="Add member to group"
+      ng-model="new-member" ng-submit="">
+    </form>
+    <!-- 2. Input field to add general tasks to project pinboard -->
+    <div class="proj-general-tasks">
+      <h3>Tasks</h3>
+      <form class="proj-new-task-form" ng-submit="">
+        <div class="proj-form-group">
+          <!-- a. same addTask function used here as with general tasks, however
+            group ID included in body of POST -OR- in the URI -->
+          <input type="text" ng-model="input" class="proj-new-task-input" placeholder="Add New Task">
+        </div>
+        <button type="submit" class="btn btn-default" value="Add Task">Add Task</button>
+      </form>
+    </div>
   </div>
