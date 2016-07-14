@@ -10,13 +10,8 @@ var taskSchema = new Schema({
   owner: {type: Schema.Types.ObjectId, ref: 'User'},
   createdAt: Date,
   dueDate: Date,
-<<<<<<< 3e50264ed632cd2cb3f8c0982cea824eecb05dba
-  completed: Boolean, 
-  group: [{type: Schema.Types.ObjectId, ref: 'Group'}] 
-=======
   completed: Boolean,
   group: [{type: Schema.Types.ObjectId, ref: 'Group'}]
->>>>>>> re-write files server.js and database.js
 });
 
 
@@ -26,25 +21,14 @@ var Task = mongoose.model('Task', taskSchema);
 var UserSchema = new Schema({
 	username: { type: String, required: true, index: { unique: true } },
   password: { type: String, required: true },
-<<<<<<< 3e50264ed632cd2cb3f8c0982cea824eecb05dba
-	token: String, 
-	tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}], 
-	groups: [{type: Schema.Types.ObjectId, ref: 'Group'}]
-}); 
-=======
 	token: String,
 	tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}],
 	groups: [{type: Schema.Types.ObjectId, ref: 'Group'}]
 });
->>>>>>> re-write files server.js and database.js
 
 //User group schema
 var groupSchema = new Schema({
-<<<<<<< 3e50264ed632cd2cb3f8c0982cea824eecb05dba
-  users:[{type: Schema.Types.ObjectId, ref: 'User'}], 
-=======
   users:[{type: Schema.Types.ObjectId, ref: 'User'}],
->>>>>>> re-write files server.js and database.js
   tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}]
 });
 // contains an array of user ids along with an array of task ids
