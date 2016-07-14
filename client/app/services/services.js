@@ -2,14 +2,25 @@ angular.module('services', [])
 
 .factory('Tasks', function ($http) {
 
-  var fetchAllTasks = function(){
+  var getUserTasks = function(user){
       return $http({
-        method: 'GET',
-        url: '/api/tasks'
+        method: 'POST',
+        url: '/api/usertasks',
+        data: user
       }).then(function(resp){
+        console.log(resp.data);
         return resp.data;
       })
     };
+
+    var fetchAllTasks = function(){
+        return $http({
+          method: 'GET',
+          url: '/api/tasks'
+        }).then(function(resp){
+          return resp.data;
+        })
+      };
 
   var addTask = function(task, callback){
     console.log('working', task);
@@ -22,6 +33,7 @@ angular.module('services', [])
       callback(resp);
     })
   };
+
 
   var deleteTask = function(task, callback){
      return $http({
@@ -52,6 +64,7 @@ angular.module('services', [])
 
   return {
     fetchAllTasks:fetchAllTasks,
+    getUserTasks:getUserTasks,
     addTask: addTask,
     deleteTask:deleteTask,
     completeTask: completeTask
@@ -68,7 +81,7 @@ angular.module('services', [])
       data: user
     })
     .then(function (resp) {
-      console.log(resp.data);
+      console.log("user object from backend",resp.data);
       currUser.user = resp.data.user;
       return resp.data;
     });

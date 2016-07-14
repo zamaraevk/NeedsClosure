@@ -17,15 +17,12 @@ app.listen(process.env.PORT || 3000, function(){
 
 app.post('/api/signup', function(req, res, next){
 	//add new user
-	/* 
+	/*
 	proper format of request (password is in plain-text when passed from front-end):
-
 	{
 			"username": "harish",
 	    "password": "abc123"
-
 	}
-
 	*/
 	var newUser = req.body;
 	taskFuncs.signup(newUser, res, next);
@@ -55,7 +52,6 @@ app.post('/api/usertasks', function(req, res){
 	{
 		"user": "5787b4442cb0dadd096e94d7" // this is the same ID you received when the user signs in
 	}
-
 	*/
 	console.log("request received at usertasks for: ", req.body.user);
 	var user = req.body.user;
@@ -92,11 +88,12 @@ app.put('/api/tasks', function(req, res){
 	taskFuncs.completeTask(req.body.id, res);
 })
 
-app.put('/api/tasks/edit', function(req, res, next){        
-	//handle edit of the task name 
-	// needs the request body and id 
-	console.log("task was updated", req.body); 
-	taskFuncs.editTask(req.body._id, req.body, res, next); 
+
+app.put('/api/tasks/edit', function(req, res, next){
+	//handle edit of the task name
+	// needs the request body and id
+	console.log("task was updated", req.body);
+	taskFuncs.editTask(req.body._id, req.body, res, next);
 })
 
 module.exports = app;
