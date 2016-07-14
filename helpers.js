@@ -108,9 +108,8 @@ var taskFuncs = {
 						console.log("new user not saved", err);
 					}
 				console.log("new user saved");
-				var token = jwt.encode(user, 'secret');
-        res.json({token: token}); //will create and send new token
-				// res.send("new user saved");
+				var token = jwt.encode(user, 'secret'); //create new token
+        res.json({"token": token, "user": {"id": user._id, "username": user.username}}); //send new token and user object
 			})
 
 			}
@@ -137,8 +136,8 @@ var taskFuncs = {
 					}
 					else{
 						console.log("password correct!");
-						var token = jwt.encode(user[0], 'secret');
-            res.json({token: token}); //will create and send new token
+						var token = jwt.encode(user[0], 'secret'); //create new token
+            res.json({"token": token, "user": {"id": user[0]._id, "username": user[0].username}}); //send new token and user object
 						// res.send(isMatch); //will send true to client if inputted password matches the password in the database
 					}
 				})
