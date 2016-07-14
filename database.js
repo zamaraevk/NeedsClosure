@@ -11,7 +11,7 @@ var taskSchema = new Schema({
   createdAt: Date,
   dueDate: Date,
   completed: Boolean
-  // group: [{type: Schema.Types.ObjectId, ref: 'Group'}] 
+  group: [{type: Schema.Types.ObjectId, ref: 'Group'}] 
 });
 
 
@@ -23,8 +23,16 @@ var UserSchema = new Schema({
   password: { type: String, required: true },
 	token: String, 
 	tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}] 
-	// groups: [type: Schema.Types.ObjectID, ref: 'Group']
+	groups: [type: Schema.Types.ObjectID, ref: 'Group']
 }); 
+
+//User group schema 
+var groupSchema = new Schema({
+  users:[{type: Schema.Types.ObjectId, ref: 'User'}]
+  tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}]
+});
+// contains an array of user ids along with an array of task ids
+var Group = mongoose.model('Group', groupSchema); 
 
 UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
@@ -68,4 +76,4 @@ var User = mongoose.model('User', UserSchema);
 // var Group = mongoose.model('Group', GroupSchema);
 
 
-module.exports = {user: User, task: Task}; 
+module.exports = {user: User, task: Task, group: Group}; 
