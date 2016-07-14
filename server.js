@@ -17,7 +17,7 @@ app.listen(process.env.PORT || 3000, function(){
 
 app.post('/api/signup', function(req, res, next){
 	//add new user
-	/* 
+	/*
 	proper format of request (password is in plain-text when passed from front-end):
 
 	{
@@ -93,8 +93,8 @@ app.put('/api/tasks', function(req, res){
 })
 
 app.put('/api/tasks/edit', function(req, res, next){
-	console.log("task was updated", req.body); 
-	taskFuncs.editTask(req.body._id, req.body, res, next); 
+	console.log("task was updated", req.body);
+	taskFuncs.editTask(req.body._id, req.body, res, next);
 })
 
 module.exports = app;
