@@ -10,7 +10,7 @@ var taskSchema = new Schema({
   owner: {type: Schema.Types.ObjectId, ref: 'User'},
   createdAt: Date,
   dueDate: Date,
-  completed: Boolean
+  completed: Boolean, 
   group: [{type: Schema.Types.ObjectId, ref: 'Group'}] 
 });
 
@@ -22,13 +22,13 @@ var UserSchema = new Schema({
 	username: { type: String, required: true, index: { unique: true } },
   password: { type: String, required: true },
 	token: String, 
-	tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}] 
-	groups: [type: Schema.Types.ObjectID, ref: 'Group']
+	tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}], 
+	groups: [{type: Schema.Types.ObjectId, ref: 'Group'}]
 }); 
 
 //User group schema 
 var groupSchema = new Schema({
-  users:[{type: Schema.Types.ObjectId, ref: 'User'}]
+  users:[{type: Schema.Types.ObjectId, ref: 'User'}], 
   tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}]
 });
 // contains an array of user ids along with an array of task ids
