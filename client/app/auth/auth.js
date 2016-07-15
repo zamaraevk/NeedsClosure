@@ -6,7 +6,10 @@ angular.module('auth', [])
   $scope.signin = function () {
     Auth.signin($scope.user)
       .then(function (res) {
+        console.log(res);
         $window.localStorage.setItem('com.fridge', res.token);
+        $window.localStorage.setItem('user.fridge', res.user.username);
+        $window.localStorage.setItem('id.fridge', res.user.id);
         $location.path('/tasks');
       })
       .catch(function (error) {

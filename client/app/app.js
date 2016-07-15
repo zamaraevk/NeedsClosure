@@ -8,10 +8,10 @@ angular.module('fridge', [
 
 // ui router for single-page application
 .config(function($stateProvider, $urlRouterProvider, $httpProvider){
-  $urlRouterProvider.otherwise("/");
+  $urlRouterProvider.otherwise("/signin");
   $stateProvider
-    .state('/', {
-      url: '/',
+    .state('/tasks', {
+      url: '/tasks',
       templateUrl: 'app/tasks/tasks.html',
       controller: 'TasksController'
     })
@@ -35,7 +35,7 @@ angular.module('fridge', [
 .factory('AttachTokens', function ($window) {
   var attach = {
     request: function (object) {
-      var jwt = $window.localStorage.getItem('com.shortly');
+      var jwt = $window.localStorage.getItem('com.fridge');
       if (jwt) {
         object.headers['x-access-token'] = jwt;
       }

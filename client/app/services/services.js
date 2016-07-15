@@ -92,7 +92,6 @@ angular.module('services', [])
 })
 
 .factory('Auth', function ($http, $location, $window) {
-  var currUser = {user: null}
   var signin = function (user) {
     return $http({
       method: 'POST',
@@ -100,8 +99,6 @@ angular.module('services', [])
       data: user
     })
     .then(function (resp) {
-      console.log("user object from backend",resp.data);
-      currUser.user = resp.data.user;
       return resp.data;
     });
   };
@@ -122,7 +119,10 @@ angular.module('services', [])
   };
 
   var signout = function () {
+    $window.localStorage.removeItem('user.fridge');
+    $window.localStorage.removeItem('id.fridge');
     $window.localStorage.removeItem('com.fridge');
+
     $location.path('/signin');
   };
 
@@ -131,7 +131,6 @@ angular.module('services', [])
     signin: signin,
     signup: signup,
     isAuth: isAuth,
-    signout: signout,
-    currUser: currUser
+    signout: signout
   };
 });
