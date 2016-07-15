@@ -41,7 +41,7 @@ var taskFuncs = {
 		})
 
 	},
-	addTask: function(task, owner, res) {
+	addTask: function(task, res) {
 		var newTask = new Model.task(task);
 		newTask.save(function(err){
 			if(err) {

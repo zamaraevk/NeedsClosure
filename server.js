@@ -47,7 +47,7 @@ app.get('/api/tasks', function(req, res){
 	taskFuncs.getAllTasks(res);
 })
 
-app.post('/api/usertasks', function(req, res){
+app.post('/api/usertasks', function(req, res){ //to receive all the tasks for the current user
 	/* proper format of request
 	{
 		"user": "5787b4442cb0dadd096e94d7" // this is the same ID you received when the user signs in
@@ -58,20 +58,14 @@ app.post('/api/usertasks', function(req, res){
 	taskFuncs.getUserTasks(user, res);
 })
 
-app.post('/api/tasks', function(req, res){
-	//handle add task
-	//need to check format of req.body
-	//need to have proper res.end (should send 201)
+app.post('/api/tasks', function(req, res){ //to add task for current user
 	console.log('request received at addTask');
 	console.log("incoming task", req.body);
 	var task = req.body;
-	var owner = req.body.userID;
-	taskFuncs.addTask(task, owner, res);
-
+	taskFuncs.addTask(task, res);
 })
 
 app.post('/api/tasks/delete', function(req, res){
-  //console.log('1KONSTANTIN', req.params.id);
 	/* proper format of request:
 		{
 			"id": "5783ec2a12cda2db6ce7ac91"
