@@ -34,7 +34,6 @@ angular.module('services', [])
     })
   };
 
-
   var deleteTask = function(task, callback){
      return $http({
        method: 'POST',
@@ -49,18 +48,17 @@ angular.module('services', [])
    };
 
    var completeTask = function(task, callback){
-       return $http({
-         method: 'PUT',
-         url: '/api/tasks',
-         data: task
-       }).then(function(resp){
-         //using callback to update our tasks ONLY after respond
-         callback(resp);
-       }).catch(function(err){
-         console.log('Error', err);
-       })
-     }
-
+     return $http({
+       method: 'PUT',
+       url: '/api/tasks',
+       data: task
+     }).then(function(resp){
+       //using callback to update our tasks ONLY after respond
+       callback(resp);
+     }).catch(function(err){
+       console.log('Error', err);
+     })
+   };
 
   return {
     fetchAllTasks:fetchAllTasks,
@@ -70,6 +68,27 @@ angular.module('services', [])
     completeTask: completeTask
   }
 
+})
+
+.factory('Proj', function($http){
+  //function to add new project to the projects list in index.html sidebar
+  var addProject = function(project){
+    return $http({
+      method: 'POST',
+      url: '/api/projects',
+      data: project
+    })
+    .then(function(resp){
+      //will anything be returned by this function that will be used frontend?
+    })
+    .catch(function(err){
+      console.error(err);
+    })
+  };
+
+  return {
+    addProject: addProject
+  }
 })
 
 .factory('Auth', function ($http, $location, $window) {

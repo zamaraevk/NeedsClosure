@@ -1,0 +1,8 @@
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <li ng-repeat="project in projects" ng-class="{active:project.selected}">
+      <a href="" ng-click="select(project)">{{project.title}}</a>
+    </li>
+  </ul>
+  <!-- <div class="tab-content" ng-transclude></div> -->
+</div>

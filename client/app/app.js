@@ -1,6 +1,7 @@
 angular.module('fridge', [
   'tasks',
   'services',
+  'app.projects'
   'ui.router',
   'auth'
 ])
