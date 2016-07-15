@@ -20,8 +20,11 @@ angular.module('auth', [])
 
   $scope.signup = function () {
     Auth.signup($scope.user)
-      .then(function (token) {
-        $window.localStorage.setItem('com.fridge', token);
+      .then(function (res) {
+        console.log("resopnse from server", res);
+        $window.localStorage.setItem('com.fridge', res.token);
+        $window.localStorage.setItem('user.fridge', res.user.username);
+        $window.localStorage.setItem('id.fridge', res.user.id);
         $location.path('/tasks');
       })
       .catch(function (error) {
