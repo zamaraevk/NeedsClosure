@@ -17,8 +17,9 @@ var taskFuncs = {
 		});
 	},
 
-	addTask: function(task, res) {
+	addTask: function(task, groupId, res) {
 		var newTask = new Model.task(task);
+		newTask.group = groupId; 
 		newTask.save(function(err){
 			if(err) {
 				console.log("error:", err);
@@ -152,6 +153,7 @@ createGroup: function(groupName, res){
 	// },
 // query the groups collection and find the specified group by groupId then push the userId to the group 
 
+// this only works for an array of groups. 
 	addGroupToUser: function(userId, groupId, res){
 		Model.user.findByIdAndUpdate(userId, {$push: {"groups": groupId}}, // query the user collection by userId and then update and push toe the user groups array. 
 			function(err) {
@@ -166,6 +168,25 @@ createGroup: function(groupName, res){
 	// not sure if mongoose populate would be relevant in this situation
 	// need to test 
 
+	addGroupToUsers: function(groupId, res) {
+		Model.group.findOne({"_id": groupId}, function(error, group) {
+			if(error) {
+				console.log(error);
+			}else {
+				group.users.forEach(function(userId) {
+					Model.user.findByIdAndUpdate(userId, {$push: {"groups": groupId}}, 
+						function(err) {
+							if(err) {
+								console.log("group not updated for user");
+							}else {
+								console.log("group updated for user"); 
+							}
+						})
+				})
+			}
+		})
+	},
+
 	collectGroupTasks: function(groupId, res){
 		Model.group.findOne({"_id": groupId}, function(error, group) {
 			if(error){
@@ -175,6 +196,20 @@ createGroup: function(groupName, res){
 			res.send(group.tasks); 
 		});
 	},
+
+	getGroups: function(userId, res) {
+		Model.user.findOne({"_id": userId}, function(error, user) {
+			if(error) {
+				console.log("Error in finding groups", error);
+			}else {
+				if(user.groups.length === 0) {
+					console.log("user groups empty");
+				}else {
+					res.send(user.groups); 
+				}
+			}
+		})
+	}, 
 	//collect the tasks for a specific groupId 
 
 	signup: function(newUser, res, next) {

@@ -77,7 +77,8 @@ app.post('/api/tasks', function(req, res){
 	console.log('request received at addTask');
 	console.log("incoming task", req.body);
 	var task = req.body;
-	taskFuncs.addTask(task, res);
+	var group = req.body.groupID;
+	taskFuncs.addTask(task, group, res);
 })
 
 //to delete task
@@ -183,6 +184,11 @@ app.post('/api/group/addTask', function(req,res) {
 	taskFuncs.addToGroupTasks(group, task, res); 
 })
 
+app.get('/api/user/getGroups', function(req,res) {
+	var user = req.body.userID; 
+
+	taskFuncs.getGroups(user, res); 
+})
 
 
 module.exports = app;
