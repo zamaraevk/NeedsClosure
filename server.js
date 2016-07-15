@@ -150,6 +150,7 @@ app.post('/api/group/getUsers', function(req, res){
 	*/
 
 	taskFuncs.getUsers(req.body.groupID, res);
+})
 
 // adding users to a group 
 app.post('/api/group/addUser', function(req, res) {
