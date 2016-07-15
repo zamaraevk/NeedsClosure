@@ -2,23 +2,10 @@ var Model = require('./database.js');
 var jwt  = require('jwt-simple');
 
 
-/* proper format of task document
-var taskSchema = new Schema({
-  name: String,
-  assignees: Array,
-  createdAt: Date,
-  dueDate: Date,
-  completed: Boolean
-});
-Example Task Format that should be passed from front-end:
-{
-	"name": "pick up groceries",
-	"createdAt": new Date(),
-	"completed": false
-})
-*/
-
 var taskFuncs = {
+
+/* TASK FUNCTIONS */
+
 
 	getUserTasks: function(user, res){
 		Model.task.find({"owner": user}, function(err, tasks){
@@ -26,21 +13,10 @@ var taskFuncs = {
 				console.log("tasks not fetched", err);
 			}
 			console.log("tasks", tasks);
-			res.send(tasks);
+			res.send(tasks); //sends back array of tasks
 		});
 	},
 
-	getAllTasks: function(res){
-		Model.task.find({}, function(err, tasks){
-			if(err) {
-				console.log('tasks not fetched', err);
-			}
-			console.log("tasks successfully fetched");
-			res.send(tasks); //returns an array of objects where each object is a task with a unique ID
-
-		})
-
-	},
 	addTask: function(task, res) {
 		var newTask = new Model.task(task);
 		newTask.save(function(err){
@@ -48,9 +24,10 @@ var taskFuncs = {
 				console.log("error:", err);
 			}
 			console.log("Task Added!", newTask);
-			res.send(newTask);
+			res.send(newTask); //sends back added task
 		})
 	},
+
 	deleteTask: function(id, res){
 		Model.task.remove({"_id": id}, function (err) { 
 			if(err){
@@ -88,6 +65,22 @@ var taskFuncs = {
 		});
 	},
 
+	// getAllTasks: function(res){
+	// 	Model.task.find({}, function(err, tasks){
+	// 		if(err) {
+	// 			console.log('tasks not fetched', err);
+	// 		}
+	// 		console.log("tasks successfully fetched");
+	// 		res.send(tasks); //returns an array of objects where each object is a task with a unique ID
+
+	// 	})
+
+	// },
+
+
+/* GROUP FUNCTIONS */
+
+
 	// add User to Group 
 	// adds a specified userId to a given group by passing in groupId and userId. 
 	addUserToGroup: function(userId, groupId, res){
@@ -99,7 +92,11 @@ var taskFuncs = {
 			res.send("UserId: " + userId + " was added to group: ", group)
 		})
 	}, 
-	//
+	
+
+
+/* AUTHENTICATION FUNCTIONS */
+
 
 	signup: function(newUser, res, next) {
 		Model.user.find({"username": newUser.username}, function(err, user){
@@ -143,9 +140,7 @@ var taskFuncs = {
 					else{
 						console.log("password correct!");
 						var token = jwt.encode(user[0], 'secret'); //create new token
-						// console.log("type of ID", typeof user._id);
             res.json({"token": token, "user": {"id": user[0]._id, "username": user[0].username}}); //send new token and user object
-						// res.send(isMatch); //will send true to client if inputted password matches the password in the database
 					}
 				})
 			}

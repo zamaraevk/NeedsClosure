@@ -14,9 +14,11 @@ app.listen(process.env.PORT || 3000, function(){
   console.log('Server is running');
 });
 
+/* AUTHENTICATION ROUTES  */
 
-app.post('/api/signup', function(req, res, next){
+
 	//add new user
+app.post('/api/signup', function(req, res, next){
 	/*
 	proper format of request (password is in plain-text when passed from front-end):
 	{
@@ -28,12 +30,14 @@ app.post('/api/signup', function(req, res, next){
 	taskFuncs.signup(newUser, res, next);
 })
 
+//to check if user is signed in
 app.get('/api/signedin', function(req, res, next){
 	//see helpers.js for format of request. It checks the req.headers['x-access-token']
 	console.log("signedIn request received");
 	taskFuncs.checkAuth(req, res, next);
 })
 
+//to sign in user
 app.post('/api/signin', function(req, res, next){
 	console.log("sign-in request received");
 	// format of request object is same as signup
@@ -42,12 +46,12 @@ app.post('/api/signin', function(req, res, next){
 
 })
 
-app.get('/api/tasks', function(req, res){
-	//handle getAll tasks
-	taskFuncs.getAllTasks(res);
-})
 
-app.post('/api/usertasks', function(req, res){ //to receive all the tasks for the current user
+/* TASK ROUTES */
+
+
+ //to receive all tasks for the current user
+app.post('/api/usertasks', function(req, res){
 	/* proper format of request
 	{
 		"user": "5787b4442cb0dadd096e94d7" // this is the same ID you received when the user signs in
@@ -58,36 +62,53 @@ app.post('/api/usertasks', function(req, res){ //to receive all the tasks for th
 	taskFuncs.getUserTasks(user, res);
 })
 
-app.post('/api/tasks', function(req, res){ //to add task for current user
+ //to add task for current user
+
+ /* 
+	PROPER FORMAT OF TASK
+	{
+		"name": "pick up groceries",
+		"owner": '578854c9bbeb92be05c47711' <-- this is the id sent when a user signs in 
+		"createdAt": new Date(),
+		"completed": false
+}
+  */
+app.post('/api/tasks', function(req, res){
 	console.log('request received at addTask');
 	console.log("incoming task", req.body);
 	var task = req.body;
 	taskFuncs.addTask(task, res);
 })
 
+//to delete task
 app.post('/api/tasks/delete', function(req, res){
 	/* proper format of request:
 		{
-			"id": "5783ec2a12cda2db6ce7ac91"
+			"id": "5783ec2a12cda2db6ce7ac91" <-- id of task to be deleted
 		}
 	*/
 	console.log("request received at deleteTask", req.body.id);
 	taskFuncs.deleteTask(req.body.id, res);
 })
 
+//to mark task as complete
 app.put('/api/tasks', function(req, res){
-	//handle complete task
 	//format of request same as delete request
 	console.log("request received at completeTask for:", req.body.id);
 	taskFuncs.completeTask(req.body.id, res);
 })
 
-
+//to edit name of task
 app.put('/api/tasks/edit', function(req, res, next){
-	//handle edit of the task name
 	// needs the request body and id
 	console.log("task was updated", req.body);
 	taskFuncs.editTask(req.body._id, req.body, res, next);
 })
+
+// app.get('/api/tasks', function(req, res){
+// 	handle getAll tasks
+// 	taskFuncs.getAllTasks(res);
+// })
+
 
 module.exports = app;
