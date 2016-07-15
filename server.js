@@ -14,9 +14,11 @@ app.listen(process.env.PORT || 3000, function(){
   console.log('Server is running');
 });
 
+/* AUTHENTICATION ROUTES  */
 
-app.post('/api/signup', function(req, res, next){
+
 	//add new user
+app.post('/api/signup', function(req, res, next){
 	/*
 	proper format of request (password is in plain-text when passed from front-end):
 	{
@@ -28,12 +30,14 @@ app.post('/api/signup', function(req, res, next){
 	taskFuncs.signup(newUser, res, next);
 })
 
+//to check if user is signed in
 app.get('/api/signedin', function(req, res, next){
 	//see helpers.js for format of request. It checks the req.headers['x-access-token']
 	console.log("signedIn request received");
 	taskFuncs.checkAuth(req, res, next);
 })
 
+//to sign in user
 app.post('/api/signin', function(req, res, next){
 	console.log("sign-in request received");
 	// format of request object is same as signup
@@ -42,11 +46,11 @@ app.post('/api/signin', function(req, res, next){
 
 })
 
-app.get('/api/tasks', function(req, res){
-	//handle getAll tasks
-	taskFuncs.getAllTasks(res);
-})
 
+/* TASK ROUTES */
+
+
+ //to receive all tasks for the current user
 app.post('/api/usertasks', function(req, res){
 	/* proper format of request
 	{
@@ -58,42 +62,94 @@ app.post('/api/usertasks', function(req, res){
 	taskFuncs.getUserTasks(user, res);
 })
 
+ //to add task for current user
+
+ /* 
+	PROPER FORMAT OF TASK
+	{
+		"name": "pick up groceries",
+		"owner": '578854c9bbeb92be05c47711' <-- this is the id sent when a user signs in 
+		"createdAt": new Date(),
+		"completed": false
+}
+  */
 app.post('/api/tasks', function(req, res){
-	//handle add task
-	//need to check format of req.body
-	//need to have proper res.end (should send 201)
 	console.log('request received at addTask');
 	console.log("incoming task", req.body);
 	var task = req.body;
-	var owner = req.body.userID;
-	taskFuncs.addTask(task, owner, res);
-
+	taskFuncs.addTask(task, res);
 })
 
+//to delete task
 app.post('/api/tasks/delete', function(req, res){
-  //console.log('1KONSTANTIN', req.params.id);
 	/* proper format of request:
 		{
-			"id": "5783ec2a12cda2db6ce7ac91"
+			"id": "5783ec2a12cda2db6ce7ac91" <-- id of task to be deleted
 		}
 	*/
 	console.log("request received at deleteTask", req.body.id);
 	taskFuncs.deleteTask(req.body.id, res);
 })
 
+//to mark task as complete
 app.put('/api/tasks', function(req, res){
-	//handle complete task
 	//format of request same as delete request
 	console.log("request received at completeTask for:", req.body.id);
 	taskFuncs.completeTask(req.body.id, res);
 })
 
-
+//to edit name of task
 app.put('/api/tasks/edit', function(req, res, next){
-	//handle edit of the task name
 	// needs the request body and id
 	console.log("task was updated", req.body);
 	taskFuncs.editTask(req.body._id, req.body, res, next);
+})
+
+// app.get('/api/tasks', function(req, res){
+// 	handle getAll tasks
+// 	taskFuncs.getAllTasks(res);
+// })
+
+/* GROUP ROUTES */
+
+//create group
+app.post('/api/createGroup', function(req, res){
+	console.log("request received at createGroup");
+	/* 
+	PROPER FORMAT OF REQUEST
+
+	{
+		"name": "MakerSquare Students"
+	}
+
+	*/
+	var groupName = req.body.name;
+	taskFuncs.createGroup(groupName, res);
+})
+
+//add user to group
+app.put('/api/group/addUser', function(req, res){
+	console.log("request received at addUserToGroup");
+	/* PROPER FORMAT OF REQUEST
+	{
+		username: "konstantin", <- user to be added
+		groupID: "57885ea24bc2a48306d93ba9" <- group to be altered (must be ID because there can be multiple groups with the same name in our database)
+	}
+	*/
+	taskFuncs.addUserToGroup(req.body.username, req.body.groupID, res);
+})
+
+//get users for group
+
+app.post('/api/group/getUsers', function(req, res){
+	console.log("request received at getUsersForGroup");
+	/* PROPER FORMAT OF REQUEST
+	{
+		groupID: "57885ea24bc2a48306d93ba9" <- group for which client wants users
+	}
+	*/
+
+	taskFuncs.getUsers(req.body.groupID, res);
 })
 
 module.exports = app;
