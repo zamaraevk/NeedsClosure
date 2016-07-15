@@ -168,6 +168,22 @@ createGroup: function(groupName, res){
 	// not sure if mongoose populate would be relevant in this situation
 	// need to test 
 
+	//adds a task to a particular group. 
+	addToGroupTasks: function(groupId, task, res) {
+		Model.group.findByIdAndUpdate(groupId, {$push: {"tasks": task}}, 
+			function(error, group) {
+				if(error) {
+					console.log("Task wasn't added to group", error) 
+				}else {
+					if(group.tasks.indexOf(task) < 0) {
+						res.send(group.tasks)
+					}else {
+						console.log("the task is already in the group tasks");
+					}
+				}
+			});
+	},
+
 	collectGroupTasks: function(groupId, res){
 		Model.group.findOne({"_id": groupId}, function(error, group) {
 			if(error){

@@ -28,7 +28,7 @@ var UserSchema = new Schema({
 
 //User group schema
 var groupSchema = new Schema({
-  name: String,
+  name: String, 
   users:[{type: Schema.Types.ObjectId, ref: 'User'}],
   tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}]
 });

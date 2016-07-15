@@ -152,7 +152,7 @@ app.post('/api/group/getUsers', function(req, res){
 	taskFuncs.getUsers(req.body.groupID, res);
 
 // adding users to a group 
-app.post('/api/tasks/group', function(req, res) {
+app.post('/api/group', function(req, res) {
 	var user = req.body.userID; 
 	var group = req.body.groupID; 
 
@@ -160,7 +160,7 @@ app.post('/api/tasks/group', function(req, res) {
 })
 
 // adding group to user
-app.post('/api/tasks/user',  function(req, res) {
+app.post('/api/user',  function(req, res) {
 	var user = req.body.userID;
 	var group = req.body.groupID; 
 
@@ -168,10 +168,18 @@ app.post('/api/tasks/user',  function(req, res) {
 })
 
 // retrieve tasks from a group 
-app.get('/api/tasks/group', function(req, res) {
+app.get('/api/group', function(req, res) {
 	var group = req.body.groupID; 
-	
+
 	taskFuncs.collectGroupTasks(group, res); 
+})
+
+// post a task to an associated group document 
+app.post('/api/group/add', function(req,res) {
+	var group = req.body.groupID;
+	var task = req.body; 
+
+	taskFuncs.addToGroupTasks(group, task, res); 
 })
 
 module.exports = app;
