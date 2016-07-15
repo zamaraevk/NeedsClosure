@@ -81,6 +81,16 @@ var taskFuncs = {
 /* GROUP FUNCTIONS */
 
 
+createGroup: function(groupName, res){
+	var group = new Model.group({"name": groupName});
+	group.save(function(err){
+		if(err){
+			console.log("group not created", err);
+		}
+		console.log("group created");
+		res.send(group);
+	})
+},
 	// add User to Group 
 	// adds a specified userId to a given group by passing in groupId and userId. 
 	addUserToGroup: function(userId, groupId, res){

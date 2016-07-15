@@ -11,7 +11,7 @@ var taskSchema = new Schema({
   createdAt: Date,
   dueDate: Date,
   completed: Boolean,
-  group: [{type: Schema.Types.ObjectId, ref: 'Group'}]
+  group: {type: Schema.Types.ObjectId, ref: 'Group'}
 });
 
 
@@ -28,6 +28,7 @@ var UserSchema = new Schema({
 
 //User group schema
 var groupSchema = new Schema({
+  name: String,
   users:[{type: Schema.Types.ObjectId, ref: 'User'}],
   tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}]
 });

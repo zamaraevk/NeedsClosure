@@ -110,5 +110,20 @@ app.put('/api/tasks/edit', function(req, res, next){
 // 	taskFuncs.getAllTasks(res);
 // })
 
+/* GROUP ROUTES */
+
+app.post('/api/createGroup', function(req, res){
+	console.log("request received at createGroup");
+	/* 
+	PROPER FORMAT OF REQUEST
+
+	{
+		"name": "MakerSquare Students"
+	}
+
+	*/
+	var groupName = req.body.name;
+	taskFuncs.createGroup(groupName, res);
+})
 
 module.exports = app;
