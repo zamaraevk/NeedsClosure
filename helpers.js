@@ -17,7 +17,7 @@ var taskFuncs = {
 		});
 	},
 
-	addTask: function(task, groupId, res) {
+	addTask: function(task, res) {
 		var newTask = new Model.task(task);
 		// Model.group.findByIdAndUpdate(groupId, {$push: } function(err, group)) 
 		newTask.save(function(err){

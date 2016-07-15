@@ -76,9 +76,9 @@ app.post('/api/usertasks', function(req, res){
 app.post('/api/tasks', function(req, res){
 	console.log('request received at addTask');
 	console.log("incoming task", req.body);
-	var task = req.body.task;
-	var group = req.body.groupID;
-	taskFuncs.addTask(task, group, res);
+	var task = req.body;
+	// var group = req.body.groupID;
+	taskFuncs.addTask(task, res);
 })
 
 //to delete task
@@ -175,6 +175,7 @@ app.post('/api/group/getTasks', function(req, res) {
 
 	taskFuncs.collectGroupTasks(group, res); 
 })
+//works and returns an array of task ids 
 
 // post a task to an associated group document 
 app.post('/api/group/addTask', function(req,res) {
@@ -183,12 +184,14 @@ app.post('/api/group/addTask', function(req,res) {
 
 	taskFuncs.addToGroupTasks(group, task, res); 
 })
+// works and tested 
 
 app.post('/api/user/getGroups', function(req,res) {
 	var user = req.body.userID; 
 
 	taskFuncs.getGroups(user, res); 
 })
+// works and tested returns an array of groupIds. 
 
 
 module.exports = app;
