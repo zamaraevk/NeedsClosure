@@ -1,0 +1,29 @@
+  <div class="proj-container">
+
+  <div class="proj-container">
+    <nav>
+      <!-- 1. Name of project -->
+      <div class="project-logo">Project Name Here</div>
+    </nav>
+    <!-- 4. Input field to add new category to pinboard (not priority) -->
+    <span>Add New Category</span>
+    <!-- 3. Feature to add new member to project
+      a. input field that searches by username -->
+    <form class="" action="index.html" method="post">
+      <!-- sends a GET request to server with input value on submit-->
+      <input type="text" name="proj-add-member-input" value="Add member to group"
+      ng-model="new-member" ng-submit="">
+    </form>
+    <!-- 2. Input field to add general tasks to project pinboard -->
+    <div class="proj-general-tasks">
+      <h3>Tasks</h3>
+      <form class="proj-new-task-form" ng-submit="">
+        <div class="proj-form-group">
+          <!-- a. same addTask function used here as with general tasks, however
+            group ID included in body of POST -OR- in the URI -->
+          <input type="text" ng-model="input" class="proj-new-task-input" placeholder="Add New Task">
+        </div>
+        <button type="submit" class="btn btn-default" value="Add Task">Add Task</button>
+      </form>
+    </div>
+  </div>
