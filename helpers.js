@@ -19,7 +19,7 @@ var taskFuncs = {
 
 	addTask: function(task, groupId, res) {
 		var newTask = new Model.task(task);
-		newTask.group = groupId; 
+		// Model.group.findByIdAndUpdate(groupId, {$push: } function(err, group)) 
 		newTask.save(function(err){
 			if(err) {
 				console.log("error:", err);
@@ -171,7 +171,7 @@ createGroup: function(groupName, res){
 	addGroupToUsers: function(groupId, res) {
 		Model.group.findOne({"_id": groupId}, function(error, group) {
 			if(error) {
-				console.log(error);
+				console.log("there is an error with adding group to user", error);
 			}else {
 				group.users.forEach(function(userId) {
 					Model.user.findByIdAndUpdate(userId, {$push: {"groups": groupId}}, 
@@ -202,7 +202,7 @@ createGroup: function(groupName, res){
 			if(error) {
 				console.log("Error in finding groups", error);
 			}else {
-				if(user.groups.length === 0) {
+				if(!user.groups.length) {
 					console.log("user groups empty");
 				}else {
 					res.send(user.groups); 
