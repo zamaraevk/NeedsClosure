@@ -1,13 +1,12 @@
 angular.module('fridge', [
   'tasks',
   'services',
-  'app.projects'
+  'app.projects',
   'ui.router',
   'auth'
 ])
 
-// ui router for single-app
-
+// ui router for single-page application
 .config(function($stateProvider, $urlRouterProvider, $httpProvider){
   $urlRouterProvider.otherwise("/");
   $stateProvider

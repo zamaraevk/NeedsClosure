@@ -12,7 +12,7 @@ angular.module('app.projects', [])
     restrict: 'E',
     transclude: true,
     scope: {},
-    controller: ['$scope', function($scope) {
+    controller: ['projTabsCtrl', function($scope) {
       var projects = $scope.projects = [];
 
       $scope.select = function(project) {
