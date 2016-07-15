@@ -92,6 +92,7 @@ createGroup: function(groupName, res){
 	})
 },
 	// add User to Group 
+<<<<<<< b3b2e57bd2fc218ba65ff51525b5490faac43802
 	addUserToGroup: function(username, groupId, res){
 		Model.user.findOne({"username": username}, function(err, user){
 			if(err){
@@ -137,6 +138,47 @@ createGroup: function(groupName, res){
 
 /* AUTHENTICATION FUNCTIONS */
 
+=======
+	// adds a specified userId to a given group by passing in groupId and userId. 
+
+	addUserToGroup: function(userId, groupId, res){
+		Model.group.findByIdAndUpdate(groupId, {$push: {"users": userId}},
+			function(error) {
+				if(error){
+					console.log("The group was not found", error); 
+				}else {
+					res.send("UserId was added to group"); 
+				}
+			}
+		);
+	},
+// query the groups collection and find the specified group by groupId then push the userId to the group 
+
+	addGroupToUser: function(userId, groupId, res){
+		Model.user.findByIdAndUpdate(userId, {$push: {"groups": groupId}}, // query the user collection by userId and then update and push toe the user groups array. 
+			function(err) {
+				if(err) {
+					console.log("user group property was not updated", err);
+				}else {
+					console.log("user group property was updated");
+				}
+			}
+		); 
+	}, 
+	// not sure if mongoose populate would be relevant in this situation
+	// need to test 
+
+	collectGroupTasks: function(groupId, res){
+		Model.group.findOne({"_id": groupId}, function(error, group) {
+			if(error){
+				console.log("Group tasks weren't retrieved", error); 
+			}
+			console.log("successfully retrieved group tasks")
+			res.send(group.tasks); 
+		});
+	},
+	//collect the tasks for a specific groupId 
+>>>>>>> created add user to group, add group to suser and collect group tasks
 
 	signup: function(newUser, res, next) {
 		Model.user.find({"username": newUser.username}, function(err, user){
