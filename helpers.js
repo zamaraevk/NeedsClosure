@@ -88,22 +88,52 @@ createGroup: function(groupName, res){
 			console.log("group not created", err);
 		}
 		console.log("group created");
-		res.send(group);
+		res.send(group); //sends back group object
 	})
 },
 	// add User to Group 
-	// adds a specified userId to a given group by passing in groupId and userId. 
-	addUserToGroup: function(userId, groupId, res){
-		Model.group.findOne({"_id": groupId}, function(error, group) {
-			if(error){
-				console.log("The group was not found", error); 
+	addUserToGroup: function(username, groupId, res){
+		Model.user.findOne({"username": username}, function(err, user){
+			if(err){
+				res.send("User not found", err)
 			}
-			group.users.push(userId); 
-			res.send("UserId: " + userId + " was added to group: ", group)
+
+			if(!user.length) {
+				Model.group.findOne({"_id": groupId}, function(error, group) {
+					if(error){
+						console.log("The group was not found", error); 
+					}
+					if(group.users.indexOf(user) >= 0) { 
+						console.log("user already exists in group");
+						res.send(new Error("user already exists in group"));
+					}
+					else{
+						group.users.push(user); 
+						group.save(function(err){
+							console.log("Current members of group", group.users);
+							res.send(user.username + " was added to group: " + group.name);
+						})
+					}
+				})
+			}
+			else{
+				res.send(new Error("user not found"));
+			}
+
 		})
+
+		
 	}, 
 	
-
+	getUsers: function(groupID, res){
+		Model.group.findOne({"_id": groupID}, function(err, group){
+			if(err){
+				console.log("group not found", err);
+			}
+			console.log("Members of group:", group.users);
+			res.send(group.users) //will return an array of user objects in the group
+		})
+	},
 
 /* AUTHENTICATION FUNCTIONS */
 

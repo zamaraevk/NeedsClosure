@@ -112,6 +112,7 @@ app.put('/api/tasks/edit', function(req, res, next){
 
 /* GROUP ROUTES */
 
+//create group
 app.post('/api/createGroup', function(req, res){
 	console.log("request received at createGroup");
 	/* 
@@ -124,6 +125,31 @@ app.post('/api/createGroup', function(req, res){
 	*/
 	var groupName = req.body.name;
 	taskFuncs.createGroup(groupName, res);
+})
+
+//add user to group
+app.put('/api/group/addUser', function(req, res){
+	console.log("request received at addUserToGroup");
+	/* PROPER FORMAT OF REQUEST
+	{
+		username: "konstantin", <- user to be added
+		groupID: "57885ea24bc2a48306d93ba9" <- group to be altered (must be ID because there can be multiple groups with the same name in our database)
+	}
+	*/
+	taskFuncs.addUserToGroup(req.body.username, req.body.groupID, res);
+})
+
+//get users for group
+
+app.post('/api/group/getUsers', function(req, res){
+	console.log("request received at getUsersForGroup");
+	/* PROPER FORMAT OF REQUEST
+	{
+		groupID: "57885ea24bc2a48306d93ba9" <- group for which client wants users
+	}
+	*/
+
+	taskFuncs.getUsers(req.body.groupID, res);
 })
 
 module.exports = app;
