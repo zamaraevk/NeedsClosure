@@ -1,6 +1,52 @@
+<!-- the ui-view directive is where our templates will be loaded into when navigated to -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Fridge</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right" ng-controller="AuthController">
+        <!-- clicking on 'logout' redirects user to login and removes session token from local storage -->
+
+        <li><a href="#" ng-click="signout()">Signout</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<!-- SIDEBAR THAT CONTAINS THE GENERAL TASKS, PROJ LIST, AND ADD NEW PROJ FEATURE -->
+<div class="sidebar" style="background-color:#eee; height:500px;">
+  <nav class="sidebar-constants">
+    <br><br>
+    <a class="sidebar-general" href="#">General</a> <br><br>
+
+    <!-- PROJECTS FEATURE -->
+    <a class="sidebar-projects" href="#">Projects
+      <!-- <a href="#">+</a> -->
+
+      <!-- DIRECTIVE TO ADD NEW PROJECT -->
+
+      <!-- <form class="new-proj-form" >
+        <input type="text" name="name" placeholder="Add New Project">
+      </form> -->
+
+      <!-- directve (that communicate w one another) for selecting different projects  -->
+      <!-- <project-tabs></project-tabs> -->
+    </a>
+  </nav>
+</div>
+
 <div class="col-sm-9">
   <div ng-controller="TasksController">
-    <h2>Welcome, {{ currentUser }}</h2>
+    <h2>Welcome, {{ cUser }}</h2>
     <div class="task-input">
       <form class="form-inline" ng-submit="onSubmit(input)">
         <div class="form-group">
