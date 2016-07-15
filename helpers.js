@@ -139,17 +139,17 @@ createGroup: function(groupName, res){
 
 	// adds a specified userId to a given group by passing in groupId and userId. 
 
-	addUserToGroup: function(userId, groupId, res){
-		Model.group.findByIdAndUpdate(groupId, {$push: {"users": userId}},
-			function(error) {
-				if(error){
-					console.log("The group was not found", error); 
-				}else {
-					res.send("UserId was added to group"); 
-				}
-			}
-		);
-	},
+	// addUserToGroup: function(userId, groupId, res){
+	// 	Model.group.findByIdAndUpdate(groupId, {$push: {"users": userId}},
+	// 		function(error) {
+	// 			if(error){
+	// 				console.log("The group was not found", error); 
+	// 			}else {
+	// 				res.send("UserId was added to group"); 
+	// 			}
+	// 		}
+	// 	);
+	// },
 // query the groups collection and find the specified group by groupId then push the userId to the group 
 
 	addGroupToUser: function(userId, groupId, res){
