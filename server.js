@@ -137,6 +137,7 @@ app.put('/api/group/addUser', function(req, res){
 		groupID: "57885ea24bc2a48306d93ba9" <- group to be altered (must be ID because there can be multiple groups with the same name in our database)
 	}
 	*/
+	
 	taskFuncs.addUserToGroup(req.body.username, req.body.groupID, res);
 })
 
