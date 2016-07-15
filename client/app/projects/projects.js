@@ -1,10 +1,20 @@
 angular.module('app.projects', [])
 
-.controller('ProjController', function($scope, Proj){
-  $scope.newProject = {};
-  $scope.addNewProj = function(){
-    Proj.addProject($scope.newProject);
-  };
+.directive('newProjInput', function(){
+  return {
+    restrict: 'E',
+    transclude: true,
+    scope: {},
+    controller: ['newProjCtrl', function($scope, Proj){
+      $scope.newProject = {};
+      $scope.addNewProj = function(){
+        // Proj.addProject($scope.newProject);
+        console.log($scope.newProject);
+      };
+    }],
+    // templateUrl: 'app/projects/new-project-input.html'
+    template: "<div>Hello World</div>"
+  }
 })
 
 .directive('projectTabs', function() {
