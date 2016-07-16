@@ -72,7 +72,8 @@ angular.module('services', [])
 
 .factory('Proj', function($http){
   //function to add new project to the projects list in index.html sidebar
-  var addProject = function(project){
+  var addProject = function(project, user){
+    project.username = user;
     return $http({
       method: 'POST',
       url: '/api/createGroup',
