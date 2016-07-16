@@ -47,3 +47,7 @@
 .projects-list {
   list-style-type: none;
 }
+
+.current-user-greeting {
+  font-weight: bold;
+}

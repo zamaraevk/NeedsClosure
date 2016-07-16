@@ -13,6 +13,9 @@ angular.module('tasks', [])
 
   //PROJECT FUNCTIONALITY
 
+  //initially set current group to general tasks and change as other project links are clicked
+  $scope.currentGroupID =
+  $scope.currentGroupName
   //new project to be sent to server
   $scope.project = {};
   //all members of a project. loaded and populated whenever a project link is clicked
@@ -24,30 +27,41 @@ angular.module('tasks', [])
   $scope.addProject = function(){
     Proj.addProject($scope.project, $scope.cUser)
     .then(function(proj){
-      console.log("Project response: ", proj);
-      var newProject = {};
-      newProject.id = proj.data._id;
-      newProject.name = proj.data.name;
-      $scope.allProjects.push(newProject);
+      $scope.allProjects.push(proj.data);
     });
     //resets input form to be blank after submission
     $scope.project = {};
   };
 
+  //function to populate sidebar task list when page is loaded
+  $scope.loadProjList = function(){
+    Proj.getUserProjectsList($scope.cUser)
+      .then(function(projList){
+        $scope.allProjects = projList.data;
+      })
+  };
+  //func is called as soon as page loads
+  $scope.loadProjList();
+
   //this function called whenever a project link is clicked in sidebar list
-  $scope.renderProjView = function(id){
-    console.log(id);
+  $scope.renderProjView = function(id, name){
+    $scope.currentGroupID = id;
+    $scope.currentGroupName = name;
     //it will fetch the tasks and the group members of the project link clicked
     Proj.fetchAllProjectTasks(id)
       .then(function(tasks){
+        console.log("Tasks from response: ", tasks);
         //subsequently, the $scope.tasks array will be populated with the tasks of
         //the specified group
         $scope.allTasks = tasks;
+        console.log($scope.allTasks);
       });
     Proj.fetchProjectMembers(id)
       .then(function(members){
+        console.log("Members from resp: ", members);
         //$scope.members will be populated with members of group
         $scope.members = members;
+        console.log($scope.members);
       });
   };
   ////////////////////////////////////
