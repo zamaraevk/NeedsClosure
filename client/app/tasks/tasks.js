@@ -1,6 +1,6 @@
 angular.module('tasks', [])
 
-.controller('TasksController', function($scope, $window, Tasks, Auth){
+.controller('TasksController', function($scope, $window, Tasks, Auth, Proj){
 
   angular.extend($scope, Tasks, Auth);
   $scope.cUser = $window.localStorage.getItem('user.fridge');
@@ -10,6 +10,39 @@ angular.module('tasks', [])
     //when ready to send requests to server, add "Tasks" controller as function input variable
   $scope.allTasks = [];
   $scope.all;
+
+  //PROJECT FUNCTIONALITY
+  $scope.project = {};
+  $scope.members = [];
+  $scope.allProjects = [];
+
+  $scope.addProject = function(){
+    console.log($scope.project);
+    Proj.addProject($scope.project)
+    .then(function(proj){
+      console.log("Project data: ", proj.data);
+      var newProject = {};
+      newProject.id = proj.data._id;
+      newProject.name = proj.data.name;
+      $scope.allProjects.push(newProject);
+      console.log("Updated allProjects Array: ", $scope.allProjects);
+    });
+    $scope.project = {};
+  };
+  
+  $scope.renderProjView = function(id){
+    console.log(id);
+    Proj.fetchAllProjectTasks(id)
+      .then(function(tasks){
+        $scope.allTasks = tasks;
+      });
+    Proj.fetchProjectMembers(id)
+      .then(function(members){
+        $scope.members = members;
+      });
+  };
+  ////////////////////////////////////
+
   //function to get all existed tasks from db
   $scope.getData = function(){
     $scope.all = $scope.getUserTasks({user: $scope.uID});
