@@ -41,5 +41,9 @@
 }
 
 .add-project-icon {
-    max-width: 100%
+  max-width: 100%
+}
+
+.projects-list {
+  list-style-type: none;
 }

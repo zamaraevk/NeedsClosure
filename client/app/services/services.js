@@ -72,22 +72,53 @@ angular.module('services', [])
 
 .factory('Proj', function($http){
   //function to add new project to the projects list in index.html sidebar
-  var addProject = function(project){
+  var addProject = function(project, user){
+    project.username = user;
     return $http({
       method: 'POST',
-      url: '/api/projects',
+      url: '/api/createGroup',
       data: project
     })
     .then(function(resp){
-      //will anything be returned by this function that will be used frontend?
+      //return group object sent back from server
+      return resp;
     })
     .catch(function(err){
       console.error(err);
     })
   };
 
+  var fetchAllProjectTasks = function(id){
+    return $http({
+      method: 'POST',
+      url: "/api/group/getTasks",
+      data: {groupID: id}
+    })
+    .then(function(resp){
+      return resp;
+    })
+    .catch(function(err){
+      console.error(err)
+    })
+  };
+  var fetchProjectMembers = function(id){
+    return $http({
+      method: 'POST',
+      url: '/api/group/getUsers',
+      data: {groupID: id}
+    })
+    .then(function(resp){
+      return resp;
+    })
+    .catch(function(err){
+      console.error(err)
+    })
+  };
+
   return {
-    addProject: addProject
+    addProject: addProject,
+    fetchAllProjectTasks: fetchAllProjectTasks,
+    fetchProjectMembers: fetchProjectMembers
   }
 })
 

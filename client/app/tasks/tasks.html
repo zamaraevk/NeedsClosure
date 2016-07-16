@@ -27,20 +27,25 @@
   <nav class="sidebar-constants">
     <br><br>
     <a class="sidebar-general" href="#">General</a> <br><br>
-
     <!-- PROJECTS FEATURE -->
-    <a class="sidebar-projects" href="#">Projects
-      <!-- <a href="#">+</a> -->
-
-      <!-- DIRECTIVE TO ADD NEW PROJECT -->
-
-      <!-- <form class="new-proj-form" >
-        <input type="text" name="name" placeholder="Add New Project">
-      </form> -->
-
-      <!-- directve (that communicate w one another) for selecting different projects  -->
-      <!-- <project-tabs></project-tabs> -->
-    </a>
+    <div class="projects-container" ng-controller="TasksController">
+      <a class="sidebar-projects" href="#">Projects</a>
+      <br><br>
+      <form class="new-proj-form" ng-submit="addProject()">
+        <input type="text" name="project" placeholder="Add New Project" ng-model="project.groupName">
+        <!-- <input type="button" value="Add Project"> -->
+      </form>
+      <br>
+      <div class="projects-list-container">
+        <ul class="projects-list">
+          <li ng-repeat="proj in allProjects">
+            <a href=""
+            ng-click="renderProjView(proj.id)">{{proj.name}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- PROJECTS FEATURE -->
   </nav>
 </div>
 
