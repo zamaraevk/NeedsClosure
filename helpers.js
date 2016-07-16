@@ -5,7 +5,18 @@ var jwt  = require('jwt-simple');
 var taskFuncs = {
 
 /* TASK FUNCTIONS */
+	
+	// checks to see if user exists if so return the userId for that user. 
 
+ checkUser: function(userName, res) {
+		Model.user.findOne({"username": userName}, function(err, found){
+		  if(err) {
+        console.log("username not found");
+		  }else {
+        res.send(found._id);
+		  }
+		})
+  },
 
 	getUserTasks: function(user, res){
 		Model.task.find({"owner": user}, function(err, tasks){
@@ -49,19 +60,16 @@ var taskFuncs = {
 		});
 	},
 
-	editTask: function(id, edited, res){
-		console.log("request id", id);
-		console.log("edit body", edited);
+	editTask: function(id, editedTask, res){
 		// updates the task name based on the request body and the id associated with it. 
 		
 		Model.task.update({"_id": id}, {
-			name: edited.name
-
+			name: editedTask
 		}, function(err, obj) {
 			if(err) {
 				console.log("task update failed", err); 
 			}
-			res.send("task was updated"); 
+			res.send("task was updated", obj); 
 		});
 	},
 
@@ -163,6 +171,8 @@ createGroup: function(groupName, username, res){
 			}
 		})
 	}, 
+
+
 
 /* AUTHENTICATION FUNCTIONS */
 

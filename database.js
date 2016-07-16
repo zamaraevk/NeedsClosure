@@ -5,6 +5,8 @@ var SALT_WORK_FACTOR = 10;
 
 mongoose.connect('mongodb://needsclosure:needsclosure1@ds021289.mlab.com:21289/needsclosure');
 
+
+//TASK SCHEMA 
 var taskSchema = new Schema({
   name: String,
   owner: {type: Schema.Types.ObjectId, ref: 'User'},
@@ -17,7 +19,8 @@ var taskSchema = new Schema({
 
 var Task = mongoose.model('Task', taskSchema);
 
-//User schema
+
+//USER SCHEMA 
 var UserSchema = new Schema({
 	username: { type: String, required: true, index: { unique: true } },
   password: { type: String, required: true },
@@ -26,13 +29,16 @@ var UserSchema = new Schema({
 	groups: [{type: Schema.Types.ObjectId, ref: 'Group'}]
 });
 
-//User group schema
+
+//GROUP SCHEMA 
 var groupSchema = new Schema({
   name: String, 
   users:[{type: Schema.Types.ObjectId, ref: 'User'}],
   tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}]
 });
 // contains an array of user ids along with an array of task ids
+
+
 var Group = mongoose.model('Group', groupSchema);
 
 UserSchema.methods.comparePassword = function(candidatePassword, cb) {
@@ -66,15 +72,6 @@ bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
 
 
 var User = mongoose.model('User', UserSchema);
-
-// var GroupSchema = new Schema({
-//   name: String,
-//   members: [type: Schema.Types.ObjectId, ref: 'User'],
-//   tasks: [type: Schema.Types.ObjectID, ref: 'Task']
-
-// })
-
-// var Group = mongoose.model('Group', GroupSchema);
 
 
 module.exports = {user: User, task: Task, group: Group};
