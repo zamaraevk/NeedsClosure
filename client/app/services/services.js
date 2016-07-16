@@ -30,7 +30,11 @@ angular.module('services', [])
       data: task
     }).then(function(resp){
       //using callback to update our tasks ONLY after respond
-      callback(resp);
+      // callback(resp);
+      return resp;
+    })
+    .catch(function(err){
+      console.err("Error adding task: ", err);
     })
   };
 
