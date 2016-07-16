@@ -51,16 +51,16 @@ app.post('/api/signin', function(req, res, next){
 
 
  //to receive all tasks for the current user
-// app.post('/api/usertasks', function(req, res){
-// 	 proper format of request
-// 	{
-// 		"user": "5787b4442cb0dadd096e94d7" // this is the same ID you received when the user signs in
-// 	}
+app.post('/api/user/usertasks', function(req, res){
+	//  proper format of request
+	// {
+	// 	"user": "5787b4442cb0dadd096e94d7" // this is the same ID you received when the user signs in
+	// }
 	
-// 	console.log("request received at usertasks for: ", req.body.user);
-// 	var user = req.body.user;
-// 	taskFuncs.getUserTasks(user, res);
-// })
+	console.log("request received at usertasks for: ", req.body.user);
+	var user = req.body.user;
+	taskFuncs.getUserTasks(user, res);
+})
 
  /* 
 	PROPER FORMAT OF TASK
@@ -106,8 +106,15 @@ app.put('/api/tasks', function(req, res){
 //to edit name of task
 app.put('/api/tasks/edit', function(req, res, next){
 	// needs the request body and id
+
+	/* proper format of request
+		{
+			"_id": "5783ec2a12cda2db6ce7ac91",
+			"task": "go to gym"
+		}
+	*/
 	console.log("task was updated", req.body);
-	taskFuncs.editTask(req.body._id, req.body, res, next);
+	taskFuncs.editTask(req.body._id, req.body.name, res, next);
 })
 
 
@@ -185,6 +192,18 @@ app.post('/api/group/getTasks', function(req, res) {
 	*/
 	var group = req.body.groupID; 
 	taskFuncs.collectGroupTasks(group, res); 
+})
+
+
+//*  USER ROUTE  *//
+// Check if user exists
+app.post('/api/user/check', function(req, res) {
+ /*PROPER FORMAT OF REQUEST
+	 {
+			"user": "makersquare"
+	 }
+ */
+ taskFuncs.checkUser(req.body.user, res);
 })
 
 
