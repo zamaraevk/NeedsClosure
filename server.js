@@ -79,6 +79,9 @@ app.post('/api/tasks', function(req, res){
 	console.log('request received at addTask');
 	console.log("incoming task", req.body);
 	var task = req.body;
+
+	// var group = req.body.groupID;
+	//  added username 
 	taskFuncs.addTask(task, res);
 })
 

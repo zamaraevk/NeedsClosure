@@ -6,6 +6,15 @@ var taskFuncs = {
 
 /* TASK FUNCTIONS */
 
+	// checkUser: function(userName, res) {
+	// 	Model.user.findOne({"username": userName}, function(err, found){
+	// 		if(err) {
+	// 			console.log("username not found");
+	// 		}else {
+	// 			res.send(found._id);
+	// 		}
+	// 	})
+	// },
 
 	getUserTasks: function(user, res){
 		Model.task.find({"owner": user}, function(err, tasks){
