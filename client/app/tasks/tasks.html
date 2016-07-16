@@ -10,12 +10,14 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">Fridge</a>
+      <div class="current-user-greeting-container" ng-controller="TasksController">
+        <p class="current-user-greeting">Welcome, {{ cUser }}</p>
+      </div>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right" ng-controller="AuthController">
         <!-- clicking on 'logout' redirects user to login and removes session token from local storage -->
-
         <li><a href="#" ng-click="signout()">Signout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -27,6 +29,7 @@
   <nav class="sidebar-constants">
     <br><br>
     <a class="sidebar-general" href="#">General</a> <br><br>
+
     <!-- PROJECTS FEATURE -->
     <div class="projects-container" ng-controller="TasksController">
       <a class="sidebar-projects" href="#">Projects</a>
@@ -40,18 +43,18 @@
         <ul class="projects-list">
           <li ng-repeat="proj in allProjects">
             <a href=""
-            ng-click="renderProjView(proj.id)">{{proj.name}}</a>
+            ng-click="renderProjView(proj._id, proj.name)">{{proj.name}}</a>
           </li>
         </ul>
       </div>
     </div>
     <!-- PROJECTS FEATURE -->
+
   </nav>
 </div>
 
 <div class="col-sm-9">
   <div ng-controller="TasksController">
-    <h2>Welcome, {{ cUser }}</h2>
     <div class="task-input">
       <form class="form-inline" ng-submit="onSubmit(input)">
         <div class="form-group">

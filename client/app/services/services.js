@@ -114,11 +114,25 @@ angular.module('services', [])
       console.error(err)
     })
   };
+  var getUserProjectsList = function(user){
+    return $http({
+      method: "POST",
+      url: "/api/user/getGroups",
+      data: {username: user}
+    })
+    .then(function(resp){
+      return resp;
+    })
+    .catch(function(err){
+      console.error(err)
+    })
+  };
 
   return {
     addProject: addProject,
     fetchAllProjectTasks: fetchAllProjectTasks,
-    fetchProjectMembers: fetchProjectMembers
+    fetchProjectMembers: fetchProjectMembers,
+    getUserProjectsList: getUserProjectsList
   }
 })
 
