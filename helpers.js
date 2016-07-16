@@ -66,33 +66,31 @@ var taskFuncs = {
 		});
 	},
 
-	// getAllTasks: function(res){
-	// 	Model.task.find({}, function(err, tasks){
-	// 		if(err) {
-	// 			console.log('tasks not fetched', err);
-	// 		}
-	// 		console.log("tasks successfully fetched");
-	// 		res.send(tasks); //returns an array of objects where each object is a task with a unique ID
-
-	// 	})
-
-	// },
-
 
 /* GROUP FUNCTIONS */
 
-
-createGroup: function(groupName, res){
+//creates group and adds group to user
+createGroup: function(groupName, username, res){
 	var group = new Model.group({"name": groupName});
-	group.save(function(err){
-		if(err){
-			console.log("group not created", err);
-		}
-		console.log("group created");
-		res.send(group); //sends back group object
-	})
+
+		Model.user.update({"username": username}, {$push:{"groups": group}}, 
+			function(err){
+				if(err){
+					res.send(new Error("new group not saved to user document"))
+				}
+
+				Model.user.findOne({"username": username}, function(err, user){
+					group.users.push(user);
+					group.save(function(err){
+						if(err){res.send("group not created", err)}
+						res.send("new group created and saved to current user doc");
+					})
+				})
+		})
+	
 },
-	// add User to Group 
+
+	// adds User to Group AND adds group to user
 	addUserToGroup: function(username, groupId, res){
 		Model.user.findOne({"username": username}, function(err, user){
 			if(err){
@@ -104,7 +102,7 @@ createGroup: function(groupName, res){
 					if(error){
 						console.log("The group was not found", error); 
 					}
-					if(group.users.indexOf(user) >= 0) { 
+					if(group.users.indexOf(user._id) >= 0) { 
 						console.log("user already exists in group");
 						res.send(new Error("user already exists in group"));
 					}
@@ -112,7 +110,10 @@ createGroup: function(groupName, res){
 						group.users.push(user); 
 						group.save(function(err){
 							console.log("Current members of group", group.users);
-							res.send(user.username + " was added to group: " + group.name);
+							user.groups.push(group);
+							user.save(function(err){
+								res.send("user saved to group and group saved to user");
+							})
 						})
 					}
 				})
@@ -123,9 +124,9 @@ createGroup: function(groupName, res){
 
 		})
 
-		
 	}, 
 	
+	//get users for current group
 	getUsers: function(groupID, res){
 		Model.group.findOne({"_id": groupID}, function(err, group){
 			if(err){
@@ -136,81 +137,34 @@ createGroup: function(groupName, res){
 		})
 	},
 
-/* AUTHENTICATION FUNCTIONS */
-
-	// adds a specified userId to a given group by passing in groupId and userId. 
-
-	// addUserToGroup: function(userId, groupId, res){
-	// 	Model.group.findByIdAndUpdate(groupId, {$push: {"users": userId}},
-	// 		function(error) {
-	// 			if(error){
-	// 				console.log("The group was not found", error); 
-	// 			}else {
-	// 				res.send("UserId was added to group"); 
-	// 			}
-	// 		}
-	// 	);
-	// },
-// query the groups collection and find the specified group by groupId then push the userId to the group 
-
-// this only works for an array of groups. 
-	addGroupToUser: function(userId, groupId, res){
-		Model.user.findByIdAndUpdate(userId, {$push: {"groups": groupId}}, // query the user collection by userId and then update and push toe the user groups array. 
-			function(err) {
-				if(err) {
-					console.log("user group property was not updated", err);
-				}else {
-					console.log("user group property was updated");
-				}
-			}
-		); 
-	}, 
-	// not sure if mongoose populate would be relevant in this situation
-	// need to test 
-
-	addGroupToUsers: function(groupId, res) {
-		Model.group.findOne({"_id": groupId}, function(error, group) {
-			if(error) {
-				console.log("there is an error with adding group to user", error);
-			}else {
-				group.users.forEach(function(userId) {
-					Model.user.findByIdAndUpdate(userId, {$push: {"groups": groupId}}, 
-						function(err) {
-							if(err) {
-								console.log("group not updated for user");
-							}else {
-								console.log("group updated for user"); 
-							}
-						})
-				})
-			}
-		})
-	},
-
+	//get tasks for group
 	collectGroupTasks: function(groupId, res){
-		Model.group.findOne({"_id": groupId}, function(error, group) {
+		Model.task.find({"group": groupId}, function(error, tasks) {
 			if(error){
 				console.log("Group tasks weren't retrieved", error); 
 			}
-			console.log("successfully retrieved group tasks")
-			res.send(group.tasks); 
+			console.log("successfully retrieved group tasks:", tasks);
+			res.send(tasks); 
 		});
 	},
 
-	getGroups: function(userId, res) {
-		Model.user.findOne({"_id": userId}, function(error, user) {
+	//get groups that user is a member of
+	getGroups: function(username, res) {
+		Model.user.findOne({"username": username}, function(error, user) {
 			if(error) {
 				console.log("Error in finding groups", error);
 			}else {
 				if(!user.groups.length) {
-					console.log("user groups empty");
+					res.send("user does not have any groups");
 				}else {
+					console.log("groups: ", user.groups);
 					res.send(user.groups); 
 				}
 			}
 		})
 	}, 
-	//collect the tasks for a specific groupId 
+
+/* AUTHENTICATION FUNCTIONS */
 
 	signup: function(newUser, res, next) {
 		Model.user.find({"username": newUser.username}, function(err, user){
