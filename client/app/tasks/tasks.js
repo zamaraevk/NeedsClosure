@@ -14,12 +14,13 @@ angular.module('tasks', [])
   //PROJECT FUNCTIONALITY
 
   //initially set current group to general tasks and change as other project links are clicked
-  // $scope.currentProjectID;
-  // $scope.currentProjectName;
+  $window.localStorage.setItem('proj.name.fridge', 'All Tasks');
+  $window.localStorage.setItem('proj.id.fridge', undefined);
+  
   $scope.$watch('currentProjectName', function(newVal, oldVal){
     $scope.projNameDisplay = $scope.name;
   });
-  //new project to be sent to server
+  //new project container that is sent to server when user presses enter in 'Add New Proj' input form
   $scope.project = {};
   //all members of a project. loaded and populated whenever a project link is clicked
   $scope.members = [];
@@ -48,10 +49,14 @@ angular.module('tasks', [])
 
   //this function called whenever a project link is clicked in sidebar list
   $scope.renderProjView = function(id, name){
-    $scope.currentProjectID = id;
-    $scope.currentProjectName = name;
-    console.log("Curr proj ID: ", $scope.currentProjectID);
-    console.log("Curr proj Name: ", $scope.currentProjectName);
+    $window.localStorage.setItem('proj.name.fridge', name);
+    $window.localStorage.setItem('proj.id.fridge', id);
+    console.log("render name: ", $window.localStorage.getItem('proj.name.fridge'));
+
+    //first thing to do when a project link is clicked is to clear out tasks in
+    //$scope.allTasks and replace with tasks of clicked project
+    $scope.allTasks = [];
+
     //it will fetch the tasks and the group members of the project link clicked
     Proj.fetchAllProjectTasks(id)
       .then(function(tasks){
@@ -80,22 +85,22 @@ angular.module('tasks', [])
 
 
   $scope.addTask = function(input){
-    console.log("addtask- Curr proj ID: ", $scope.currentProjectID);
-    console.log("addtask- Curr proj Name: ", $scope.currentProjectName);
-    $scope.taskData = {
+    var projID = $window.localStorage.getItem('proj.id.fridge');
+    var taskData = {
     	name: input,
     	createdAt: new Date(),
-      group: $scope.currentProjectID,
+      group: projID,
     	completed: false,
       owner:$scope.uID
     };
-    Tasks.addTask($scope.taskData)
-      .then(function(resp){
-        console.log("Response from add task: ", resp);
+    Tasks.addTask(taskData)
+      .then(function(task){
+        //update task list with most recently added task
+        $scope.allTasks.push(task.data)
         //clear input after task has been added
         $scope.input = null;
-        //update task list
-        $scope.getData();
+        // //update task list
+        // $scope.getData();
       });
   }
   $scope.deleteById = function(task){
