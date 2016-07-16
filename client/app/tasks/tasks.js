@@ -14,13 +14,15 @@ angular.module('tasks', [])
   //PROJECT FUNCTIONALITY
 
   //initially set current group to general tasks and change as other project links are clicked
-  $window.localStorage.setItem('proj.name.fridge', 'All Tasks');
 
-  //$window.localStorage.setItem('proj.id.fridge', "5788511user1148306d93ba9");
+  $scope.currentProjName = $window.localStorage.setItem('proj.name.fridge', 'All Tasks');
+  $window.localStorage.setItem('proj.id.fridge', undefined);
 
-  $scope.$watch('currentProjectName', function(newVal, oldVal){
-    $scope.projNameDisplay = $scope.name;
-  });
+  // $scope.$watch('currentProjectName', function(newVal, oldVal){
+  //   $scope.projNameDisplay = newVal;
+  // });
+  //Progress on getting curr proj name to appear
+
   //new project container that is sent to server when user presses enter in 'Add New Proj' input form
   $scope.project = {};
   //all members of a project. loaded and populated whenever a project link is clicked
@@ -60,7 +62,7 @@ angular.module('tasks', [])
 
   //this function called whenever a project link is clicked in sidebar list
   $scope.renderProjView = function(id, name){
-    $window.localStorage.setItem('proj.name.fridge', name);
+    $scope.currentProjName = $window.localStorage.setItem('proj.name.fridge', name);
     $window.localStorage.setItem('proj.id.fridge', id);
     console.log("render name: ", $window.localStorage.getItem('proj.name.fridge'));
 
