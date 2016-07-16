@@ -5,7 +5,7 @@ angular.module('services', [])
   var getUserTasks = function(user){
       return $http({
         method: 'POST',
-        url: '/api/usertasks',
+        url: '/api/user/usertasks',
         data: user
       }).then(function(resp){
         console.log(resp.data);
