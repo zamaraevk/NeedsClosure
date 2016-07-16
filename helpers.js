@@ -112,7 +112,7 @@ createGroup: function(groupName, username, res){
 							console.log("Current members of group", group.users);
 							user.groups.push(group);
 							user.save(function(err){
-								res.send("user saved to group and group saved to user");
+								res.send(group);
 							})
 						})
 					}
