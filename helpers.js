@@ -19,7 +19,6 @@ var taskFuncs = {
 
 	addTask: function(task, res) {
 		var newTask = new Model.task(task);
-		// Model.group.findByIdAndUpdate(groupId, {$push: } function(err, group)) 
 		newTask.save(function(err){
 			if(err) {
 				console.log("error:", err);
@@ -102,6 +101,7 @@ createGroup: function(groupName, username, res){
 					if(error){
 						console.log("The group was not found", error); 
 					}
+					console.log("group")
 					if(group.users.indexOf(user._id) >= 0) { 
 						console.log("user already exists in group");
 						res.send(new Error("user already exists in group"));
@@ -128,7 +128,7 @@ createGroup: function(groupName, username, res){
 	
 	//get users for current group
 	getUsers: function(groupID, res){
-		Model.group.findOne({"_id": groupID}, function(err, group){
+		Model.group.findOne({"_id": groupID}).populate('users').exec(function(err, group){
 			if(err){
 				console.log("group not found", err);
 			}
@@ -150,7 +150,7 @@ createGroup: function(groupName, username, res){
 
 	//get groups that user is a member of
 	getGroups: function(username, res) {
-		Model.user.findOne({"username": username}, function(error, user) {
+		Model.user.findOne({"username": username}).populate('groups').exec(function(error, user) {
 			if(error) {
 				console.log("Error in finding groups", error);
 			}else {
