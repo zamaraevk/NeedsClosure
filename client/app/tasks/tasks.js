@@ -15,7 +15,7 @@ angular.module('tasks', [])
 
   //initially set current group to general tasks and change as other project links are clicked
   $window.localStorage.setItem('proj.name.fridge', 'All Tasks');
-  $window.localStorage.setItem('proj.id.fridge', "5788511user1148306d93ba9");
+  //$window.localStorage.setItem('proj.id.fridge', "5788511user1148306d93ba9");
 
   $scope.$watch('currentProjectName', function(newVal, oldVal){
     $scope.projNameDisplay = $scope.name;
