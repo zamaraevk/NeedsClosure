@@ -16,6 +16,10 @@ var taskSchema = new Schema({
   group: {type: Schema.Types.ObjectId, ref: 'Group'}
 });
 
+taskSchema.pre('save', function(next){
+  if(!this.group){this.group =  this.owner}
+    next();
+})
 
 var Task = mongoose.model('Task', taskSchema);
 
