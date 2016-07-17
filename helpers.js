@@ -8,12 +8,18 @@ var taskFuncs = {
 	
 	// checks to see if user exists if so return the userId for that user. 
 
- checkUser: function(userName, res) {
+ checkUser: function(userName, res, next) {
 		Model.user.findOne({"username": userName}, function(err, found){
 		  if(err) {
-        console.log("username not found");
-		  }else {
+		  	console.log("ERROR:", err);
+        res.send(new Error(err));
+		  }
+		  if(found) {
+		  	console.log("user exists", found);
         res.send(found._id);
+		  }
+		  else{
+		  	next(new Error("username does not exist"));
 		  }
 		})
   },
@@ -98,36 +104,36 @@ createGroup: function(groupName, username, res){
 },
 
 	// adds User to Group AND adds group to user
-	addUserToGroup: function(username, groupId, res){
+	addUserToGroup: function(username, groupId, res, next){
 		Model.user.findOne({"username": username}, function(err, user){
 			if(err){
 				res.send("User not found", err)
 			}
-
-			if(!user.length) {
-				Model.group.findOne({"_id": groupId}, function(error, group) {
-					if(error){
-						console.log("The group was not found", error); 
-					}
-					console.log("group")
-					if(group.users.indexOf(user._id) >= 0) { 
-						console.log("user already exists in group");
-						res.send(new Error("user already exists in group"));
-					}
-					else{
-						group.users.push(user); 
-						group.save(function(err){
-							console.log("Current members of group", group.users);
-							user.groups.push(group);
-							user.save(function(err){
-								res.send(group);
+			if(user) {
+					console.log("USER HAS A LENGTH!")
+					Model.group.findOne({"_id": groupId}, function(error, group) {
+						if(error){
+							console.log("The group was not found", error); 
+						}
+						if(group.users.indexOf(user._id) >= 0) { 
+							console.log("user already exists in group");
+							res.send(new Error("user already exists in group"));
+						}
+						else{
+							console.log("about to push user into group!")
+							group.users.push(user); 
+							group.save(function(err){
+								// console.log("Current members of group", group.users);
+								user.groups.push(group);
+								user.save(function(err){
+									res.send(group);
+								})
 							})
-						})
-					}
-				})
+						}
+					})
 			}
 			else{
-				res.send(new Error("user not found"));
+				next(new Error("user not found"));
 			}
 
 		})
