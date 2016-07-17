@@ -15,7 +15,7 @@ angular.module('tasks', [])
 
   //initially set current group to general tasks and change as other project links are clicked
   $window.localStorage.setItem('proj.name.fridge', 'All Tasks');
-  $window.localStorage.setItem('proj.id.fridge', undefined);
+  $window.localStorage.setItem('proj.id.fridge', "5788511user1148306d93ba9");
 
   $scope.$watch('currentProjectName', function(newVal, oldVal){
     $scope.projNameDisplay = $scope.name;
@@ -84,15 +84,6 @@ angular.module('tasks', [])
     $scope.getData();
 
 
-  // $scope.addTask = function(input){
-  //   var projID = $window.localStorage.getItem('proj.id.fridge');
-  //   var taskData = {
-  //   	name: input,
-  //   	createdAt: new Date(),
-  //     group: projID,
-  //   	completed: false,
-  //     owner:$scope.uID
-  //   };
     //add Task to user(current user or assign to another user)
     $scope.addTaskTo = function(input, userID){
       var projID = $window.localStorage.getItem('proj.id.fridge');
@@ -113,7 +104,6 @@ angular.module('tasks', [])
     }
 
     $scope.onSubmit = function(input, toUser){
-    //var projID = $window.localStorage.getItem('proj.id.fridge');
     if(toUser){
       //if we assigning task to user, we need to make async call to check if this user exist ni db and send userid to the client
       $scope.isUser({user: toUser}).then(function(resp){
@@ -125,16 +115,6 @@ angular.module('tasks', [])
     }
   }
 
-  //   Tasks.addTask(taskData)
-  //     .then(function(task){
-  //       //update task list with most recently added task
-  //       $scope.allTasks.push(task.data)
-  //       //clear input after task has been added
-  //       $scope.input = null;
-  //       // //update task list
-  //       // $scope.getData();
-  //     });
-  // }
   $scope.deleteById = function(task){
     $scope.deleteTask({id: task}, function(resp){
       $scope.getData();

@@ -41,7 +41,7 @@ angular.module('services', [])
       url: '/api/tasks',
       data: task
     }).then(function(resp){
-      console.log(resp)
+      console.log("here is response from server", resp)
       //using callback to update our tasks ONLY after respond
       callback(resp);
       //return resp;
