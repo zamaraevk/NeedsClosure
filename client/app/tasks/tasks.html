@@ -28,11 +28,10 @@
 <div class="sidebar" style="background-color:#eee; height:500px;">
   <nav class="sidebar-constants">
     <br><br>
-    <a class="sidebar-general" href="#">General</a> <br><br>
 
     <!-- PROJECTS FEATURE -->
     <div class="projects-container" ng-controller="TasksController">
-      <a class="sidebar-projects" href="#">Projects</a>
+      <h3>Projects</h3>
       <br><br>
       <form class="new-proj-form" ng-submit="addProject()">
         <input type="text" name="project" placeholder="Add New Project" ng-model="project.groupName">
@@ -42,8 +41,7 @@
       <div class="projects-list-container">
         <ul class="projects-list">
           <li ng-repeat="proj in allProjects">
-            <a href="/groups"
-            ng-click="renderProjView(proj._id, proj.name)">{{proj.name}}</a>
+            <a data="{{proj.name}}" data="{{proj._id}}" ng-click="relocate(proj.name, proj._id)">{{proj.name}}</a>
           </li>
         </ul>
       </div>
@@ -84,7 +82,6 @@
     <h3>Completed Tasks</h3>
     <div class="task-list">
       <div class="task" ng-repeat="task in allTasks | filter:{completed:true} | orderBy: '-created_at':true">
-        <span data="{{task._id}}" ng-click="complete(task._id)" class="status">Status: {{task.completed}} //  </span>
           {{task.name}} --- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
         <span data="{{task._id}}" ng-click="deleteById(task._id)" style="float:right"><button class="btn btn-default">Delete</button></span>
       </div>
