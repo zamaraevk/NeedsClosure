@@ -16,7 +16,10 @@ angular.module('tasks', [])
   //initially set current group to general tasks and change as other project links are clicked
 
   $scope.currentProjName = $window.localStorage.setItem('proj.name.fridge', 'All Tasks');
+
   $window.localStorage.setItem('proj.id.fridge', undefined);
+
+  $scope.currentProjName = [$window.localStorage.getItem('proj.name.fridge')];
 
   // $scope.$watch('currentProjectName', function(newVal, oldVal){
   //   $scope.projNameDisplay = newVal;
@@ -29,6 +32,16 @@ angular.module('tasks', [])
   $scope.members = [];
   //array of all projects, which is formatted as a list in sidebar
   $scope.allProjects = [];
+  //cached clone of the task div in task.html
+  var taskListPending,
+      taskListComplete,
+      cloneTasks = function(){
+        taskListPending = angular.element(document.querySelector(".task-list-pending"));
+        taskListComplete = angular.element(document.querySelector(".task-list-complete"));
+        console.log("CLONE ", taskListPending);
+        console.log("CLONE ", taskListComplete);
+      };
+  cloneTasks();
 
   //add new project to sidebar list and to db
   $scope.addProject = function(){
@@ -43,9 +56,9 @@ angular.module('tasks', [])
   //function to populate sidebar task list when page is loaded
   $scope.loadProjList = function(){
     Proj.getUserProjectsList($scope.cUser)
-      .then(function(projList){
-        $scope.allProjects = projList.data;
-      })
+    .then(function(projList){
+      $scope.allProjects = projList.data;
+    })
   };
   //func is called as soon as page loads
   $scope.loadProjList();
@@ -62,21 +75,38 @@ angular.module('tasks', [])
 
   //this function called whenever a project link is clicked in sidebar list
   $scope.renderProjView = function(id, name){
-    $scope.currentProjName = $window.localStorage.setItem('proj.name.fridge', name);
+    $window.localStorage.setItem('proj.name.fridge', name);
     $window.localStorage.setItem('proj.id.fridge', id);
+    $scope.currentProjName = [$window.localStorage.getItem('proj.name.fridge')];
     console.log("render name: ", $window.localStorage.getItem('proj.name.fridge'));
+    console.log("$scope.currentProjName: ", $scope.currentProjName);
 
-    //first thing to do when a project link is clicked is to clear out tasks in
-    //$scope.allTasks and replace with tasks of clicked project
+
+    //first step is to clear the DOM of all tasks so that it can be repopulated with
+    //the tasks of the selected project
+
+    taskListPending.empty();
+    taskListComplete.empty();
     $scope.allTasks = [];
 
     //it will fetch the tasks and the group members of the project link clicked
+<<<<<<< 2f64517a6a96523d1820d5f10750894463fe5eea
     // Proj.fetchAllProjectTasks(id)
     //   .then(function(tasks){
     //     //subsequently, the $scope.tasks array will be populated with the tasks of
     //     //the specified group
     //     $scope.allTasks = tasks;
     //   });
+=======
+    Proj.fetchAllProjectTasks(id)
+      .then(function(tasks){
+        //subsequently, the $scope.tasks array will be populated with the tasks of
+        //the specified group
+        console.log("Group tasks fetched: ", tasks);
+        $scope.allTasks = tasks.data;
+        console.log('$scope.allTasks after assigned group tasks: ', $scope.allTasks);
+      });
+>>>>>>> updates
     Proj.fetchProjectMembers(id)
       .then(function(members){
         //$scope.members will be populated with members of group
@@ -143,5 +173,26 @@ angular.module('tasks', [])
     $scope.completeTask({id: task}, function(resp){
       $scope.getData();
     });
+  }
+})
+
+// .directive('project-logo', function(){
+//   return {
+//     restrict: 'E',
+//     transclude: true,
+//     templateUrl:
+//   }
+// })
+
+.directive('tasker', function(){
+  return {
+    restrict: "E",
+    transclude: true,
+    scope: {},
+    controller: 'TasksController',
+    template: "<p>I AM A DIRECTIVE</p>",
+    link: function(scope, element, attrs, TasksController){
+      // element.remove();
+    }
   }
 })

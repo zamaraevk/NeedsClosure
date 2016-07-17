@@ -132,7 +132,7 @@ angular.module('services', [])
       return resp;
     })
     .catch(function(err){
-      console.error(err)
+      console.error("Error fetching all group tasks: ", err)
     })
   };
   var fetchProjectMembers = function(id){
