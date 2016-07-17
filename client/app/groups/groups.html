@@ -24,24 +24,27 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+  <h3>Fuck Yeah!</h3>
+
 <!-- SIDEBAR THAT CONTAINS THE GENERAL TASKS, PROJ LIST, AND ADD NEW PROJ FEATURE -->
 <div class="sidebar" style="background-color:#eee; height:500px;">
   <nav class="sidebar-constants">
-    <br><br>
-
     <!-- PROJECTS FEATURE -->
-    <div class="projects-container" ng-controller="TasksController">
-      <h3>Projects</h3>
+    <div class="projects-container" ng-controller="GroupController">
       <br><br>
-      <form class="new-proj-form" ng-submit="addProject()">
-        <input type="text" name="project" placeholder="Add New Project" ng-model="project.groupName">
+      <a ng-click="relocate()" class="sidebar-general">Back to my Tasks</a>
+      <br><br>
+      <h3>Users</h3>
+      <br><br>
+      <form class="new-proj-form" ng-submit="addUser(userToGroup)">
+        <input type="text" placeholder="Add New User" ng-model="userToGroup">
         <!-- <input type="button" value="Add Project"> -->
       </form>
       <br>
       <div class="projects-list-container">
         <ul class="projects-list">
-          <li ng-repeat="proj in allProjects">
-            <a data="{{proj.name}}" data="{{proj._id}}" ng-click="relocate(proj.name, proj._id)">{{proj.name}}</a>
+          <li ng-repeat="user in usersInGroup">
+            {{user.username}}
           </li>
         </ul>
       </div>
@@ -52,23 +55,22 @@
 </div>
 
 <div class="col-sm-9">
-  <div ng-controller="TasksController">
-    <div class="current-proj-name-container" ng-init="General">
+  <div ng-controller="GroupController">
+    <div class="current-proj-name-container">
       <h3>{{projNameDisplay}}</h3>
     </div>
 
     <div class="task-input">
-      <form class="form-inline" ng-submit="onSubmit(input, toUser)">
+      <form class="form-inline" ng-submit="onSubmit(input)">
         <div class="form-group">
           <input type="text" ng-model="input" class="form-control" placeholder="Add New Task">
-          <input type="text" ng-model="toUser" class="form-control" placeholder="To User(optional)">
         </div>
         <button type="submit" class="btn btn-default" value="Add Task">Add Task</button>
       </form>
     </div>
     <h3>Current Tasks</h3>
     <div class="task-list">
-      <div class="task" ng-repeat="task in allTasks | filter:{completed:false} | orderBy: '-created_at':true">
+      <div class="task" ng-repeat="task in allGroupTasks | filter:{completed:false} | orderBy: '-created_at':true">
 
           {{task.name}} --- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
 
@@ -81,7 +83,7 @@
 
     <h3>Completed Tasks</h3>
     <div class="task-list">
-      <div class="task" ng-repeat="task in allTasks | filter:{completed:true} | orderBy: '-created_at':true">
+      <div class="task" ng-repeat="task in allGroupTasks | filter:{completed:true} | orderBy: '-created_at':true">
           {{task.name}} --- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
         <span data="{{task._id}}" ng-click="deleteById(task._id)" style="float:right"><button class="btn btn-default">Delete</button></span>
       </div>

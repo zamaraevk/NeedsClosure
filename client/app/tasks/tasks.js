@@ -1,6 +1,6 @@
 angular.module('tasks', [])
 
-.controller('TasksController', function($scope, $window, Tasks, Auth, Proj){
+.controller('TasksController', function($scope, $window, $location, Tasks, Auth, Proj){
 
   angular.extend($scope, Tasks, Auth);
   $scope.cUser = $window.localStorage.getItem('user.fridge');
@@ -15,6 +15,7 @@ angular.module('tasks', [])
 
   //initially set current group to general tasks and change as other project links are clicked
   $window.localStorage.setItem('proj.name.fridge', 'All Tasks');
+
   //$window.localStorage.setItem('proj.id.fridge', "5788511user1148306d93ba9");
 
   $scope.$watch('currentProjectName', function(newVal, oldVal){
@@ -31,7 +32,7 @@ angular.module('tasks', [])
   $scope.addProject = function(){
     Proj.addProject($scope.project, $scope.cUser)
     .then(function(proj){
-      $scope.allProjects.push(proj.data);
+      $scope.loadProjList();
     });
     //resets input form to be blank after submission
     $scope.project = {};
@@ -47,6 +48,16 @@ angular.module('tasks', [])
   //func is called as soon as page loads
   $scope.loadProjList();
 
+  //add new project to sidebar list and to db
+  $scope.addProject = function(){
+    Proj.addProject($scope.project, $scope.cUser)
+    .then(function(proj){
+      $scope.loadProjList();
+      //resets input form to be blank after submission
+      $scope.project = null;
+    });
+  };
+
   //this function called whenever a project link is clicked in sidebar list
   $scope.renderProjView = function(id, name){
     $window.localStorage.setItem('proj.name.fridge', name);
@@ -58,12 +69,12 @@ angular.module('tasks', [])
     $scope.allTasks = [];
 
     //it will fetch the tasks and the group members of the project link clicked
-    Proj.fetchAllProjectTasks(id)
-      .then(function(tasks){
-        //subsequently, the $scope.tasks array will be populated with the tasks of
-        //the specified group
-        $scope.allTasks = tasks;
-      });
+    // Proj.fetchAllProjectTasks(id)
+    //   .then(function(tasks){
+    //     //subsequently, the $scope.tasks array will be populated with the tasks of
+    //     //the specified group
+    //     $scope.allTasks = tasks;
+    //   });
     Proj.fetchProjectMembers(id)
       .then(function(members){
         //$scope.members will be populated with members of group
@@ -72,11 +83,17 @@ angular.module('tasks', [])
   };
   ////////////////////////////////////
 
+  $scope.relocate = function (group, id) {
+        $window.localStorage.setItem('group.id', id);
+        $window.localStorage.setItem('group.name', group);
+        $location.path('/groups');
+  }
+
   //function to get all existed tasks from db
   $scope.getData = function(){
     $scope.all = $scope.getUserTasks({user: $scope.uID});
     $scope.all.then(function(resp){
-      console.log(resp)
+    //  console.log(resp)
       $scope.allTasks = resp;
     })
   }

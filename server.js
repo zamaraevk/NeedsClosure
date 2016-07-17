@@ -56,17 +56,17 @@ app.post('/api/user/usertasks', function(req, res){
 	// {
 	// 	"user": "5787b4442cb0dadd096e94d7" // this is the same ID you received when the user signs in
 	// }
-	
+
 	console.log("request received at usertasks for: ", req.body.user);
 	var user = req.body.user;
 	taskFuncs.getUserTasks(user, res);
 })
 
- /* 
+ /*
 	PROPER FORMAT OF TASK
 	{
 		"name": "pick up groceries",
-		"owner": '578854c9bbeb92be05c47711' <-- this is the id sent when a user signs in 
+		"owner": '578854c9bbeb92be05c47711' <-- this is the id sent when a user signs in
 		"group": '57885ea24bc2a48306d93ba9' <-- this is the _id for the group that the user is posting in
 		"createdAt": new Date(),
 		"completed": false
@@ -81,7 +81,7 @@ app.post('/api/tasks', function(req, res){
 	var task = req.body;
 
 	// var group = req.body.groupID;
-	//  added username 
+	//  added username
 	taskFuncs.addTask(task, res);
 })
 
@@ -125,7 +125,7 @@ app.put('/api/tasks/edit', function(req, res, next){
 //create group
 app.post('/api/createGroup', function(req, res){
 	console.log("request received at createGroup");
-	/* 
+	/*
 	PROPER FORMAT OF REQUEST
 
 	{
@@ -148,7 +148,7 @@ app.put('/api/group/addUser', function(req, res){
 		groupID: "57885ea24bc2a48306d93ba9" <- group to be altered (must be ID because there can be multiple groups with the same name in our database)
 	}
 	*/
-	
+
 	taskFuncs.addUserToGroup(req.body.username, req.body.groupID, res);
 })
 
@@ -162,9 +162,9 @@ app.post('/api/user/getGroups', function(req,res) {
 	}
 
 	*/
-	var user = req.body.username; 
+	var user = req.body.username;
 
-	taskFuncs.getGroups(user, res); 
+	taskFuncs.getGroups(user, res);
 })
 
 
@@ -181,7 +181,7 @@ app.post('/api/group/getUsers', function(req, res){
 })
 
 
-// get tasks for a group 
+// get tasks for a group
 app.post('/api/group/getTasks', function(req, res) {
 	/* PROPER FORMAT OF REQUEST
 
@@ -190,7 +190,7 @@ app.post('/api/group/getTasks', function(req, res) {
 	}
 
 	*/
-	var group = req.body.groupID; 
+	var group = req.body.groupID;
 	taskFuncs.collectGroupTasks(group, res); 
 })
 
