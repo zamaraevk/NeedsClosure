@@ -20,7 +20,7 @@ angular.module('services', [])
         url: '/api/user/usertasks',
         data: user
       }).then(function(resp){
-        console.log(resp.data);
+        //console.log(resp.data);
         return resp.data;
       })
     };
@@ -106,6 +106,22 @@ angular.module('services', [])
     })
   };
 
+  var addUserToGroup = function(user){
+    return $http({
+      method: 'PUT',
+      url: '/api/group/addUser',
+      data: user
+    })
+    .then(function(resp){
+      //return group object sent back from server
+      console.log('get response on add new user', resp)
+      return resp;
+    })
+    .catch(function(err){
+      console.error(err);
+    })
+  };
+
   var fetchAllProjectTasks = function(id){
     return $http({
       method: 'POST',
@@ -147,6 +163,7 @@ angular.module('services', [])
   };
 
   return {
+    addUserToGroup:addUserToGroup,
     addProject: addProject,
     fetchAllProjectTasks: fetchAllProjectTasks,
     fetchProjectMembers: fetchProjectMembers,
