@@ -6,7 +6,7 @@ var SALT_WORK_FACTOR = 10;
 mongoose.connect('mongodb://needsclosure:needsclosure1@ds021289.mlab.com:21289/needsclosure');
 
 
-//TASK SCHEMA 
+//TASK SCHEMA
 var taskSchema = new Schema({
   name: String,
   owner: {type: Schema.Types.ObjectId, ref: 'User'},
@@ -20,7 +20,7 @@ var taskSchema = new Schema({
 var Task = mongoose.model('Task', taskSchema);
 
 
-//USER SCHEMA 
+//USER SCHEMA
 var UserSchema = new Schema({
 	username: { type: String, required: true, index: { unique: true } },
   password: { type: String, required: true },
@@ -30,9 +30,9 @@ var UserSchema = new Schema({
 });
 
 
-//GROUP SCHEMA 
+//GROUP SCHEMA
 var groupSchema = new Schema({
-  name: String, 
+  name: String,
   users:[{type: Schema.Types.ObjectId, ref: 'User'}],
   tasks: [{type: Schema.Types.ObjectId, ref: 'Task'}]
 });

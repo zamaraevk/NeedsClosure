@@ -2,6 +2,18 @@ angular.module('services', [])
 
 .factory('Tasks', function ($http) {
 
+  var isUser = function(username){
+   //console.log("I am in services", username);
+   return $http({
+     method: 'POST',
+     url: '/api/user/check',
+     data: username
+   }).then(function(resp){
+     //console.log("data from server", resp.data);
+     return resp.data;
+   })
+ };
+
   var getUserTasks = function(user){
       return $http({
         method: 'POST',
@@ -29,9 +41,10 @@ angular.module('services', [])
       url: '/api/tasks',
       data: task
     }).then(function(resp){
+      console.log("here is response from server", resp)
       //using callback to update our tasks ONLY after respond
-      // callback(resp);
-      return resp;
+      callback(resp);
+      //return resp;
     })
     .catch(function(err){
       console.err("Error adding task: ", err);
@@ -69,7 +82,8 @@ angular.module('services', [])
     getUserTasks:getUserTasks,
     addTask: addTask,
     deleteTask:deleteTask,
-    completeTask: completeTask
+    completeTask: completeTask,
+    isUser:isUser
   }
 
 })
