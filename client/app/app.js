@@ -1,5 +1,6 @@
 angular.module('fridge', [
   'tasks',
+  'groups',
   'services',
   'app.projects',
   'ui.router',
@@ -24,6 +25,10 @@ angular.module('fridge', [
       url: '/signup',
       templateUrl: 'app/auth/signup.html',
       controller: 'AuthController'
+    }).state('/groups', {
+      url: '/groups',
+      templateUrl: 'app/groups/groups.html',
+      controller: 'GroupController'
     })
 
     $httpProvider.interceptors.push('AttachTokens');
