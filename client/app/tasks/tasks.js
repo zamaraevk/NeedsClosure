@@ -90,23 +90,14 @@ angular.module('tasks', [])
     $scope.allTasks = [];
 
     //it will fetch the tasks and the group members of the project link clicked
-<<<<<<< 2f64517a6a96523d1820d5f10750894463fe5eea
+
     // Proj.fetchAllProjectTasks(id)
     //   .then(function(tasks){
     //     //subsequently, the $scope.tasks array will be populated with the tasks of
     //     //the specified group
     //     $scope.allTasks = tasks;
     //   });
-=======
-    Proj.fetchAllProjectTasks(id)
-      .then(function(tasks){
-        //subsequently, the $scope.tasks array will be populated with the tasks of
-        //the specified group
-        console.log("Group tasks fetched: ", tasks);
-        $scope.allTasks = tasks.data;
-        console.log('$scope.allTasks after assigned group tasks: ', $scope.allTasks);
-      });
->>>>>>> updates
+
     Proj.fetchProjectMembers(id)
       .then(function(members){
         //$scope.members will be populated with members of group
