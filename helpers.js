@@ -152,16 +152,26 @@ deleteGroup: function(groupId, res){
         Model.group.findOne({"_id": groupID}, function(error, group){
 					console.log("found", group);
 					var arrOfUsers = group.users;
-					var groupToRemove = arrOfUsers.indexOf(userID);
+					var userToRemove = arrOfUsers.indexOf(userID);
 					//console.log(groupToRemove);
-					group.users.splice(groupToRemove, 1);
-					console.log(group.users);
-            // group.users.(userID), function(err){
-            //         if(err){
-            //             console.log("there was an error removing the user from group");
-            //         }
-            //         console.log("user removed from group");
-            // }
+					group.users.splice(userToRemove, 1);
+					Model.user.findOne({"_id": userID}, function(err, user){
+						if(err){res.send(new Error("user not found"))}
+						var groupToRemove = user.groups.indexOf(groupID);
+						user.groups.splice(groupToRemove, 1);
+						group.save(function(err){
+							if(err){res.send("group not updated", err)}
+							console.log("actual group", group)
+							user.save(function(err){
+								if(err){res.send("user not updated")}
+								console.log("user is updated");
+								res.send("user and group have been updated");
+							})
+						})
+					})
+					// console.log(arrOfUsers);
+
+
         })
     },
 
