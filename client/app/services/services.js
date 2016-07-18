@@ -180,6 +180,9 @@ angular.module('services', [])
     })
     .then(function (resp) {
       return resp.data;
+    })
+    .catch(function(){
+      
     });
   };
 
