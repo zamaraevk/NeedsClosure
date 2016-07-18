@@ -13,11 +13,14 @@ var taskSchema = new Schema({
   createdAt: Date,
   dueDate: Date,
   completed: Boolean,
-  group: {type: Schema.Types.ObjectId, ref: 'Group'}
+  group: {type: String, ref: 'Group'}
 });
 
-taskSchema.pre('save', function(next){
-  if(!this.group){this.group =  this.owner}
+taskSchema.pre('save', function(next) {
+  console.log("checking pre-save task feature!");
+  if(!this.group){
+    this.group =  this.owner
+  }
     next();
 })
 
@@ -53,6 +56,7 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
 };
 
 UserSchema.pre('save', function(next) {
+  console.log("checking pre-save feature of user schema!!");
     var user = this;
 
 // only hash the password if it has been modified (or is new)
