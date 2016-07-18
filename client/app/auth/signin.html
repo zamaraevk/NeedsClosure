@@ -1,4 +1,23 @@
-<div class='signin'>
+<form class="form-signin" ng-submit='signin()' novalidate>
+       <h2 class="form-signin-heading">Please sign in</h2>
+       <label for="inputUsername" class="sr-only">Email address</label>
+       <input type="text" id="inputUsername" class="form-control" ng-model='user.username'
+       placeholder="Username" required autofocus>
+
+       <label for="inputPassword" class="sr-only">Password</label>
+       <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+       ng-model='user.password' required>
+
+       <div class="checkbox">
+         <label>
+           <input type="checkbox" value="remember-me"> Remember me
+         </label>
+       </div>
+       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+       <a href="#/signup">Don't have an account? <strong>Signup</strong> ...</a>
+</form>
+
+<!-- <div class='signin'>
   <h1>signin</h1>
   <br>
   <form name="signinForm" class="input" ng-submit='signin()'  novalidate>
@@ -33,4 +52,4 @@
   </form>
   <br>
   <a href="#/signup">Don't have an account? <strong>Signup</strong> ...</a>
-</div>
+</div> -->
