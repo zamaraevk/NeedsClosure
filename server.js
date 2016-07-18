@@ -140,7 +140,7 @@ app.post('/api/createGroup', function(req, res){
 })
 
 //add user to group
-app.put('/api/group/addUser', function(req, res){
+app.put('/api/group/addUser', function(req, res, next){
 	console.log("request received at addUserToGroup");
 	/* PROPER FORMAT OF REQUEST
 	{
@@ -149,7 +149,7 @@ app.put('/api/group/addUser', function(req, res){
 	}
 	*/
 
-	taskFuncs.addUserToGroup(req.body.username, req.body.groupID, res);
+	taskFuncs.addUserToGroup(req.body.username, req.body.groupID, res, next);
 })
 
 
@@ -197,13 +197,13 @@ app.post('/api/group/getTasks', function(req, res) {
 
 //*  USER ROUTE  *//
 // Check if user exists
-app.post('/api/user/check', function(req, res) {
+app.post('/api/user/check', function(req, res, next) {
  /*PROPER FORMAT OF REQUEST
 	 {
 			"user": "makersquare"
 	 }
  */
- taskFuncs.checkUser(req.body.user, res);
+ taskFuncs.checkUser(req.body.user, res, next);
 })
 
 
