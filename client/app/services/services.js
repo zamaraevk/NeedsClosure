@@ -138,6 +138,7 @@ angular.module('services', [])
   };
 
   var deleteUserByID = function(user){
+    console.log(user);
     return $http({
       method: 'POST',
       url: '/api/group/deleteUser',

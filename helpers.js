@@ -147,6 +147,23 @@ deleteGroup: function(groupId, res){
 		})
 
 	},
+	deleteUserFromGroup: function(userID, groupID, res){
+        console.log("deleteUserFromGroup", userID, groupID);
+        Model.group.findOne({"_id": groupID}, function(error, group){
+					console.log("found", group);
+					var arrOfUsers = group.users;
+					var groupToRemove = arrOfUsers.indexOf(userID);
+					//console.log(groupToRemove);
+					group.users.splice(groupToRemove, 1);
+					console.log(group.users);
+            // group.users.(userID), function(err){
+            //         if(err){
+            //             console.log("there was an error removing the user from group");
+            //         }
+            //         console.log("user removed from group");
+            // }
+        })
+    },
 
 	//get users for current group
 	getUsers: function(groupID, res){

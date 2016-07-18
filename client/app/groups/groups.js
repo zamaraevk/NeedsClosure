@@ -65,6 +65,7 @@ angular.module('groups', [])
         $location.path('/tasks');
   }
   $scope.deleteUserFromGroup = function(userID){
+    console.log(userID, group);
     Proj.deleteUserByID({id: userID, groupID: group}).then(function(resp){
       $scope.getMembersData();
     });

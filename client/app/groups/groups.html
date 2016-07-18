@@ -44,7 +44,7 @@
       <div class="projects-list-container">
         <ul class="projects-list">
           <li ng-repeat="user in usersInGroup">
-            <a href="#"><span style="color:black;" data="{{user._id}}" ng-click="deleteUserFromGroup(user._id)">X</span></a>
+            <span style="color:black;" data="{{user._id}}" ng-click="deleteUserFromGroup(user._id)">X</span>
             {{user.username}}
           </li>
         </ul>
