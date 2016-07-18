@@ -51,3 +51,12 @@
 .current-user-greeting {
   font-weight: bold;
 }
+
+.auth-error {
+  visibility: hidden;
+}
+
+.show-auth-error {
+  color: red;
+  visibility: visible;
+}

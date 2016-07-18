@@ -13,9 +13,10 @@ angular.module('auth', [])
         $location.path('/tasks');
       })
       .catch(function (error) {
-        console.error(error);
+        var result = document.getElementsByClassName("auth-error");
+        var wrappedResult = angular.element(result)
+        wrappedResult.addClass('show-auth-error');
       });
-
   };
 
   $scope.signup = function () {
@@ -28,7 +29,10 @@ angular.module('auth', [])
         $location.path('/tasks');
       })
       .catch(function (error) {
-        console.error(error);
+        console.error("Signup error: ", error);
+        var result = document.getElementsByClassName("auth-error");
+        var wrappedResult = angular.element(result)
+        wrappedResult.addClass('show-auth-error');
       });
   };
   //When 'logout' is clicked, signout() function removes token from local storage

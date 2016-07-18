@@ -181,9 +181,7 @@ angular.module('services', [])
     .then(function (resp) {
       return resp.data;
     })
-    .catch(function(){
-      
-    });
+
   };
 
   var signup = function (user) {
@@ -194,7 +192,7 @@ angular.module('services', [])
     })
     .then(function (resp) {
       return resp.data;
-    });
+    })
   };
 
   var isAuth = function () {
