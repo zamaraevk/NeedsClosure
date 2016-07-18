@@ -106,6 +106,21 @@ angular.module('services', [])
     })
   };
 
+  var deleteGroupbyID = function(group){
+     return $http({
+       method: 'POST',
+       url: '/api/deleteGroup',
+       data: JSON.stringify(group)
+     }).then(function(resp){
+       //using callback to update our tasks ONLY after respond
+       console.log(resp);
+       return resp;
+       //callback(resp);
+     }).catch(function(err){
+       console.log('Error', err);
+     })
+   };
+
   var addUserToGroup = function(user){
     return $http({
       method: 'PUT',
@@ -119,6 +134,22 @@ angular.module('services', [])
     })
     .catch(function(err){
       console.error(err);
+    })
+  };
+
+  var deleteUserByID = function(user){
+    console.log(user);
+    return $http({
+      method: 'POST',
+      url: '/api/group/deleteUser',
+      data: JSON.stringify(user)
+    }).then(function(resp){
+      //using callback to update our tasks ONLY after respond
+      console.log(resp);
+      return resp;
+      //callback(resp);
+    }).catch(function(err){
+      console.log('Error', err);
     })
   };
 
@@ -165,6 +196,8 @@ angular.module('services', [])
   return {
     addUserToGroup:addUserToGroup,
     addProject: addProject,
+    deleteGroupbyID:deleteGroupbyID,
+    deleteUserByID:deleteUserByID,
     fetchAllProjectTasks: fetchAllProjectTasks,
     fetchProjectMembers: fetchProjectMembers,
     getUserProjectsList: getUserProjectsList

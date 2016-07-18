@@ -24,7 +24,7 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-  <h3>Fuck Yeah!</h3>
+  <h3>Group View</h3>
 
 <!-- SIDEBAR THAT CONTAINS THE GENERAL TASKS, PROJ LIST, AND ADD NEW PROJ FEATURE -->
 <div class="sidebar" style="background-color:#eee; height:500px;">
@@ -44,6 +44,7 @@
       <div class="projects-list-container">
         <ul class="projects-list">
           <li ng-repeat="user in usersInGroup">
+            <span style="color:black;" data="{{user._id}}" ng-click="deleteUserFromGroup(user._id)">X</span>
             {{user.username}}
           </li>
         </ul>

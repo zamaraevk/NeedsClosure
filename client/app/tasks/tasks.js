@@ -2,7 +2,7 @@ angular.module('tasks', [])
 
 .controller('TasksController', function($scope, $window, $location, Tasks, Auth, Proj){
 
-  angular.extend($scope, Tasks, Auth);
+  angular.extend($scope, Tasks, Auth, Proj);
   $scope.cUser = $window.localStorage.getItem('user.fridge');
   $scope.uID = $window.localStorage.getItem('id.fridge');
   if(!Auth.isAuth()) { Auth.signout()}
@@ -143,6 +143,11 @@ angular.module('tasks', [])
   $scope.complete = function(task){
     $scope.completeTask({id: task}, function(resp){
       $scope.getData();
+    });
+  }
+  $scope.deleteGroup = function(groupID){
+    Proj.deleteGroupbyID({id: groupID}).then(function(proj){
+      $scope.loadProjList();
     });
   }
 })
