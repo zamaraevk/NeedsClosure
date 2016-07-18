@@ -21,27 +21,12 @@ angular.module('tasks', [])
 
   $scope.currentProjName = [$window.localStorage.getItem('proj.name.fridge')];
 
-  // $scope.$watch('currentProjectName', function(newVal, oldVal){
-  //   $scope.projNameDisplay = newVal;
-  // });
-  //Progress on getting curr proj name to appear
-
   //new project container that is sent to server when user presses enter in 'Add New Proj' input form
   $scope.project = {};
   //all members of a project. loaded and populated whenever a project link is clicked
   $scope.members = [];
   //array of all projects, which is formatted as a list in sidebar
   $scope.allProjects = [];
-  //cached clone of the task div in task.html
-  var taskListPending,
-      taskListComplete,
-      cloneTasks = function(){
-        taskListPending = angular.element(document.querySelector(".task-list-pending"));
-        taskListComplete = angular.element(document.querySelector(".task-list-complete"));
-        console.log("CLONE ", taskListPending);
-        console.log("CLONE ", taskListComplete);
-      };
-  cloneTasks();
 
   //add new project to sidebar list and to db
   $scope.addProject = function(){
@@ -78,9 +63,6 @@ angular.module('tasks', [])
     $window.localStorage.setItem('proj.name.fridge', name);
     $window.localStorage.setItem('proj.id.fridge', id);
     $scope.currentProjName = [$window.localStorage.getItem('proj.name.fridge')];
-    console.log("render name: ", $window.localStorage.getItem('proj.name.fridge'));
-    console.log("$scope.currentProjName: ", $scope.currentProjName);
-
 
     //first step is to clear the DOM of all tasks so that it can be repopulated with
     //the tasks of the selected project
@@ -107,9 +89,9 @@ angular.module('tasks', [])
   ////////////////////////////////////
 
   $scope.relocate = function (group, id) {
-        $window.localStorage.setItem('group.id', id);
-        $window.localStorage.setItem('group.name', group);
-        $location.path('/groups');
+    $window.localStorage.setItem('group.id', id);
+    $window.localStorage.setItem('group.name', group);
+    $location.path('/groups');
   }
 
   //function to get all existed tasks from db
@@ -134,7 +116,6 @@ angular.module('tasks', [])
           completed: false,
           owner:userID
         };
-        console.log('point', taskData);
       Tasks.addTask(taskData, function(resp){
         //clear input after task has been added
         $scope.input = null;
@@ -147,7 +128,6 @@ angular.module('tasks', [])
     if(toUser){
       //if we assigning task to user, we need to make async call to check if this user exist ni db and send userid to the client
       $scope.isUser({user: toUser}).then(function(resp){
-        console.log("userID", resp)
         $scope.addTaskTo(input, resp);
       })
     } else {
@@ -164,26 +144,5 @@ angular.module('tasks', [])
     $scope.completeTask({id: task}, function(resp){
       $scope.getData();
     });
-  }
-})
-
-// .directive('project-logo', function(){
-//   return {
-//     restrict: 'E',
-//     transclude: true,
-//     templateUrl:
-//   }
-// })
-
-.directive('tasker', function(){
-  return {
-    restrict: "E",
-    transclude: true,
-    scope: {},
-    controller: 'TasksController',
-    template: "<p>I AM A DIRECTIVE</p>",
-    link: function(scope, element, attrs, TasksController){
-      // element.remove();
-    }
   }
 })
