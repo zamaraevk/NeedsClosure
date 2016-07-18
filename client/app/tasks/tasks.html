@@ -42,6 +42,7 @@
         <ul class="projects-list">
           <li ng-repeat="proj in allProjects">
             <a data="{{proj.name}}" data="{{proj._id}}" ng-click="relocate(proj.name, proj._id)">{{proj.name}}</a>
+            <span style="color:black;" data="{{proj._id}}" ng-click="deleteGroup(proj._id)">X</span>
           </li>
         </ul>
       </div>
