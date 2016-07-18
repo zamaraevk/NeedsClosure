@@ -149,8 +149,5 @@ angular.module('tasks', [])
     Proj.deleteGroupbyID({id: groupID}).then(function(proj){
       $scope.loadProjList();
     });
-    // $scope.deleteTask({id: task}, function(resp){
-    //   $scope.getData();
-    // });
   }
 })

@@ -137,6 +137,21 @@ angular.module('services', [])
     })
   };
 
+  var deleteUserByID = function(user){
+    return $http({
+      method: 'POST',
+      url: '/api/group/deleteUser',
+      data: JSON.stringify(user)
+    }).then(function(resp){
+      //using callback to update our tasks ONLY after respond
+      console.log(resp);
+      return resp;
+      //callback(resp);
+    }).catch(function(err){
+      console.log('Error', err);
+    })
+  };
+
   var fetchAllProjectTasks = function(id){
     return $http({
       method: 'POST',
@@ -181,6 +196,7 @@ angular.module('services', [])
     addUserToGroup:addUserToGroup,
     addProject: addProject,
     deleteGroupbyID:deleteGroupbyID,
+    deleteUserByID:deleteUserByID,
     fetchAllProjectTasks: fetchAllProjectTasks,
     fetchProjectMembers: fetchProjectMembers,
     getUserProjectsList: getUserProjectsList
