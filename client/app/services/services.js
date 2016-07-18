@@ -132,7 +132,7 @@ angular.module('services', [])
       return resp;
     })
     .catch(function(err){
-      console.error(err)
+      console.error("Error fetching all group tasks: ", err)
     })
   };
   var fetchProjectMembers = function(id){
@@ -180,7 +180,8 @@ angular.module('services', [])
     })
     .then(function (resp) {
       return resp.data;
-    });
+    })
+
   };
 
   var signup = function (user) {
@@ -191,7 +192,7 @@ angular.module('services', [])
     })
     .then(function (resp) {
       return resp.data;
-    });
+    })
   };
 
   var isAuth = function () {

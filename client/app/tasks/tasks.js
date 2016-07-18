@@ -14,13 +14,13 @@ angular.module('tasks', [])
   //PROJECT FUNCTIONALITY
 
   //initially set current group to general tasks and change as other project links are clicked
-  $window.localStorage.setItem('proj.name.fridge', 'All Tasks');
 
-  //$window.localStorage.setItem('proj.id.fridge', "5788511user1148306d93ba9");
+  $scope.currentProjName = $window.localStorage.setItem('proj.name.fridge', 'All Tasks');
 
-  $scope.$watch('currentProjectName', function(newVal, oldVal){
-    $scope.projNameDisplay = $scope.name;
-  });
+  $window.localStorage.setItem('proj.id.fridge', undefined);
+
+  $scope.currentProjName = [$window.localStorage.getItem('proj.name.fridge')];
+
   //new project container that is sent to server when user presses enter in 'Add New Proj' input form
   $scope.project = {};
   //all members of a project. loaded and populated whenever a project link is clicked
@@ -41,9 +41,9 @@ angular.module('tasks', [])
   //function to populate sidebar task list when page is loaded
   $scope.loadProjList = function(){
     Proj.getUserProjectsList($scope.cUser)
-      .then(function(projList){
-        $scope.allProjects = projList.data;
-      })
+    .then(function(projList){
+      $scope.allProjects = projList.data;
+    })
   };
   //func is called as soon as page loads
   $scope.loadProjList();
@@ -62,19 +62,24 @@ angular.module('tasks', [])
   $scope.renderProjView = function(id, name){
     $window.localStorage.setItem('proj.name.fridge', name);
     $window.localStorage.setItem('proj.id.fridge', id);
-    console.log("render name: ", $window.localStorage.getItem('proj.name.fridge'));
+    $scope.currentProjName = [$window.localStorage.getItem('proj.name.fridge')];
 
-    //first thing to do when a project link is clicked is to clear out tasks in
-    //$scope.allTasks and replace with tasks of clicked project
+    //first step is to clear the DOM of all tasks so that it can be repopulated with
+    //the tasks of the selected project
+
+    taskListPending.empty();
+    taskListComplete.empty();
     $scope.allTasks = [];
 
     //it will fetch the tasks and the group members of the project link clicked
+
     // Proj.fetchAllProjectTasks(id)
     //   .then(function(tasks){
     //     //subsequently, the $scope.tasks array will be populated with the tasks of
     //     //the specified group
     //     $scope.allTasks = tasks;
     //   });
+
     Proj.fetchProjectMembers(id)
       .then(function(members){
         //$scope.members will be populated with members of group
@@ -84,9 +89,9 @@ angular.module('tasks', [])
   ////////////////////////////////////
 
   $scope.relocate = function (group, id) {
-        $window.localStorage.setItem('group.id', id);
-        $window.localStorage.setItem('group.name', group);
-        $location.path('/groups');
+    $window.localStorage.setItem('group.id', id);
+    $window.localStorage.setItem('group.name', group);
+    $location.path('/groups');
   }
 
   //function to get all existed tasks from db
@@ -111,7 +116,6 @@ angular.module('tasks', [])
           completed: false,
           owner:userID
         };
-        console.log('point', taskData);
       Tasks.addTask(taskData, function(resp){
         //clear input after task has been added
         $scope.input = null;
@@ -124,7 +128,6 @@ angular.module('tasks', [])
     if(toUser){
       //if we assigning task to user, we need to make async call to check if this user exist ni db and send userid to the client
       $scope.isUser({user: toUser}).then(function(resp){
-        console.log("userID", resp)
         $scope.addTaskTo(input, resp);
       })
     } else {
