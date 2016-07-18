@@ -3,6 +3,7 @@ angular.module('groups', [])
 .controller('GroupController', function($scope, $window, $location, Tasks, Auth, Proj){
 
   angular.extend($scope, Tasks, Auth, Proj);
+  $scope.groupName = $window.localStorage.getItem('group.name');
   var group = $window.localStorage.getItem('group.id');
   var id = $window.localStorage.getItem('id.fridge');
   $scope.usersInGroup = [];
