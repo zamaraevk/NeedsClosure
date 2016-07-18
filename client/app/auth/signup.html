@@ -1,4 +1,34 @@
-<div id='signup'>
+<form class="form-signin" ng-submit='signup()' novalidate>
+       <h2 class="form-signin-heading">Please Sign Up</h2>
+       <label for="inputUsername" class="sr-only">Username</label>
+
+       <input type="text" id="inputUsername" class="form-control" ng-model='user.username'
+       placeholder="Username" ng-class="{'error': signupForm.user.$invalid && !signupForm.user.$pristine}" name='user' ng-minlength="6" ng-maxlength="14" required autofocus>
+       <p ng-show="signupForm.user.$invalid && !signupForm.user.$pristine">Username must be greater than 5 characters</p>
+
+       <p class="auth-error">
+         Username already exists
+       </p>
+
+       <label for="inputPassword" class="sr-only">Password</label>
+       <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+       ng-model='user.password' ng-class="{'error': signupForm.pass.$invalid && !signupForm.pass.$pristine}" name='pass' ng-minlength="6" ng-maxlength="14" required>
+       <p ng-show="signupForm.pass.$invalid && !signupForm.pass.$pristine">Password must be greater than 6 characters</p>
+
+       <p class="auth-error">
+         Username or password invalid
+       </p>
+       <div class="checkbox">
+         <label>
+           <input type="checkbox" value="remember-me"> Remember me
+         </label>
+       </div>
+       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+      <a href="#/signin">Already have an account? <strong>Sign In</strong> ...</a>
+</form>
+
+
+<!-- <div id='signup'>
   <h1>signup</h1>
   <form name="signupForm" ng-submit='signup()' novalidate>
     <p style="font-weight:bold">
@@ -23,4 +53,4 @@
   </form>
   <br>
   <a href="#/signin">Already have an account? <strong>Signin</strong> ...</a>
-</div>
+</div> -->
