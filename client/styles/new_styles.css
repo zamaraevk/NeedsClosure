@@ -53,8 +53,8 @@ p {
    margin: 20px 0px;
    margin-left: 20px;
    font-size: 28px;
-   text-transform: capitalize;
-   font-weight: bold;
+   line-height: 58px;
+
  }
  .user {
    display: block;
