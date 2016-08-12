@@ -18,28 +18,18 @@
       <ul class="projects-list">
         <li ng-repeat="proj in allProjects">
           <a data="{{proj.name}}" data="{{proj._id}}" ng-click="relocate(proj.name, proj._id)">{{proj.name}}</a>
-          <span data="{{proj._id}}" ng-click="deleteGroup(proj._id)">delete</span>
+          <span class="glyphicon glyphicon-trash" data="{{proj._id}}" ng-click="deleteGroup(proj._id)"></span>
         </li>
       </ul>
     </div>
   </div>
   <!-- PROJECTS FEATURE -->
+  <div class="signout" ng-controller="AuthController">
+    <a href="#" ng-click="signout()"><span class="glyphicon glyphicon-off"></span></a>
+  </div>
 </aside>
 
 <div class="content">
-  <!-- the ui-view directive is where our templates will be loaded into when navigated to -->
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav navbar-right" ng-controller="AuthController">
-          <!-- clicking on 'logout' redirects user to login and removes session token from local storage -->
-          <li><a href="#" ng-click="signout()">Signout</a></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-
   <div class="wraper" ng-controller="TasksController">
     <div class="current-proj-name-container" ng-repeat="projName in currentProjName">
       <h3>{{projName}}</h3>
@@ -54,32 +44,39 @@
         <button type="submit" class="btn btn-default" value="Add Task">Add Task</button>
       </form>
     </div>
-    <h3>Current Tasks</h3>
-    <div class="task-list-pending-container">
-      <div class="task-list-pending">
-        <div class="task task-pending" ng-repeat="task in allTasks | filter:{completed:false} | orderBy: '-created_at':true">
+    <div class="task-field">
+        <div class="tasks-container">
+            <p>Current Tasks</p>
+            <div class="task" ng-repeat="task in allTasks | filter:{completed:false} | orderBy: '-created_at':true">
+              <div class="tasks-btn">
+                <span class="glyphicon glyphicon-ok" data="{{task._id}}" ng-click="complete(task._id)"></span>
+                <span class="glyphicon glyphicon-remove" data="{{task._id}}" ng-click="deleteById(task._id)"></span>
+              </div>
+              <div class="tasks-text">
+                {{task.name}}
+              </div>
+              <div class="tasks-time">
+                {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
+              </div>
 
-            {{task.name}} --- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
+            </div>
+        </div>
 
-          <span data="{{task._id}}" ng-click="deleteById(task._id)" style="float:right"><button class="btn btn-default">Delete</button></span>
-          <span data="{{task._id}}" ng-click="complete(task._id)" style="float:right"><button class="btn btn-default">Complete</button></span>
+      <div class="tasks-container">
+        <p>Completed Tasks</p>
+          <div class="task" ng-repeat="task in allTasks | filter:{completed:true} | orderBy: '-created_at':true">
+            <div class="tasks-btn">
+              <span class="glyphicon glyphicon-remove" data="{{task._id}}" ng-click="deleteById(task._id)"></span>
+            </div>
+            <div class="tasks-text">
+              {{task.name}}
+            </div>
+            <div class="tasks-time">
+              {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
+            </div>
         </div>
       </div>
     </div>
-
-
-    <hr style="background-color:black; height:5px;">
-
-    <h3>Completed Tasks</h3>
-
-    <div class="task-list">
-      <div class="task" ng-repeat="task in allTasks | filter:{completed:true} | orderBy: '-created_at':true">
-          {{task.name}} --- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
-        <span data="{{task._id}}" ng-click="deleteById(task._id)" style="float:right"><button class="btn btn-default">Delete</button></span>
-
-      </div>
-    </div>
-
   </div>
 
 </div>

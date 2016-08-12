@@ -1,7 +1,16 @@
 body  {
-  background-color: #fff;
+  background-color: #f3f1f3;
   margin: 0;
   padding: 0;
+}
+
+.form-control {
+  border: 2px solid #ccc;
+  box-shadow: none;
+}
+.form-control:focus {
+  border: 2px solid #b398b0;
+  box-shadow: none;
 }
 aside {
     position:fixed;
@@ -20,6 +29,9 @@ aside {
 }
 .wraper {
   margin: 20px;
+}
+.wraper h3{
+  color: #4d394b;
 }
 
 p {
@@ -52,9 +64,16 @@ p {
    font-size: 14px;
    color: #fff;
  }
+ .signout a{
+   display: block;
+   text-align: center;
+   font-size: 14px;
+   color: #ab9ba9;
+ }
  .projects-container {
    text-align: left;
    width: 200px;
+   min-height: 500px;
    margin-left: 20px;
    font-size: 14px;
    color: #ab9ba9;
@@ -70,6 +89,7 @@ p {
  .projects-list li {
   display: block;
   height: 20px;
+  margin-top: 10px;
 }
   .projects-list a {
    color: #ab9ba9;
@@ -82,4 +102,64 @@ p {
   float: right;
   text-decoration: none;
   cursor: pointer;
+}
+
+
+/*task-field*/
+.task-field {
+  background-color: #eee;
+  padding-left: 150px;
+}
+.tasks-container {
+  background-color: #b398b0;
+  float: left;
+  width: 310px;
+  margin: 20px;
+  margin-left: 50px;
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+.tasks-container p{
+  font-weight: bold;
+  color: #4d394b;
+}
+.task {
+  background-color: #fff;
+  margin: 5px;
+  width: 280px;
+  height: 80px;
+  border-bottom: 1px solid #936c8f;
+  border-radius: 3px;
+}
+.task:hover {
+  background-color: #ccc;
+}
+.tasks-btn {
+  text-align: right;
+}
+.tasks-text {
+  display: block;
+  font-size: 14px;
+  color: #4d4d4d;
+  padding: 10px;
+}
+.tasks-time {
+  text-align: right;
+  display: block;
+  color: #ccc;
+  padding: 0 10px;
+}
+.glyphicon {
+  cursor: pointer;
+  padding: 3px;
+}
+.glyphicon-ok {
+  color: #1abc9c;
+}
+.glyphicon-remove {
+  color: #e74c3c;
+}
+.glyphicon-off {
+  font-size: 24px;
 }
