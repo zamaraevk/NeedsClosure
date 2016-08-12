@@ -163,3 +163,15 @@ p {
 .glyphicon-off {
   font-size: 24px;
 }
+.btn:focus,.btn:active:focus,.btn.active:focus,
+.btn.focus,.btn:active.focus,.btn.active.focus {
+    outline: none;
+}
+.btn-custom,.btn-custom:focus, .btn-custom:active, .btn-custom:hover {
+  background-color: #b398b0;
+  color: #4d394b;
+  font-weight: bold;
+  border: none;
+  box-shadow: none;
+  outline: 0 none;
+}
