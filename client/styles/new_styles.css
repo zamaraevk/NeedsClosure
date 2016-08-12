@@ -177,6 +177,8 @@ p {
 }
 
 /*group-sidebar*/
-.group-container h3{
-
+.sidebar-general, .sidebar-general:hover {
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
 }

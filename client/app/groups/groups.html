@@ -1,13 +1,10 @@
 
-<aside>
+<aside ng-controller="GroupController">
   <!-- PROJECTS FEATURE -->
   <div class="logo">
-    <p>Fridge</p>
+    <p>{{groupName}}</p>
   </div>
-  <div class="user" ng-controller="TasksController">
-    <p>Welcome, {{ cUser }}</p>
-  </div>
-  <div class="projects-container" ng-controller="GroupController">
+  <div class="projects-container">
     <a ng-click="relocate()" class="sidebar-general">Back to my Tasks</a>
     <h3>USERS</h3>
     <form class="new-proj-form" ng-submit="addUser(userToGroup)">
@@ -30,40 +27,9 @@
   </div>
 </aside>
 
-  <h3>{{groupName}}</h3>
-
-<!-- SIDEBAR THAT CONTAINS THE GENERAL TASKS, PROJ LIST, AND ADD NEW PROJ FEATURE -->
-<div class="sidebar" style="background-color:#eee; height:500px;">
-  <nav class="sidebar-constants">
-    <!-- PROJECTS FEATURE -->
-    <div class="projects-container" ng-controller="GroupController">
-      <br><br>
-      <a ng-click="relocate()" class="sidebar-general">Back to my Tasks</a>
-      <br><br>
-      <h3>Users</h3>
-      <br><br>
-      <form class="new-proj-form" ng-submit="addUser(userToGroup)">
-        <input type="text" placeholder="Add New User" ng-model="userToGroup">
-        <!-- <input type="button" value="Add Project"> -->
-      </form>
-      <br>
-      <div class="projects-list-container">
-        <ul class="projects-list">
-          <li ng-repeat="user in usersInGroup">
-            <span style="color:black;" data="{{user._id}}" ng-click="deleteUserFromGroup(user._id)">X</span>
-            {{user.username}}
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- PROJECTS FEATURE -->
-
-  </nav>
-</div>
-
-<div class="col-sm-9">
-  <div ng-controller="GroupController">
-    <div class="current-proj-name-container">
+<div class="content">
+  <div class="wraper" ng-controller="GroupController">
+    <div class="current-proj-name-container" ng-repeat="projName in currentProjName">
       <h3>{{projNameDisplay}}</h3>
     </div>
 
@@ -72,34 +38,42 @@
         <div class="form-group">
           <input type="text" ng-model="input" class="form-control" placeholder="Add New Task">
         </div>
-        <button type="submit" class="btn btn-default" value="Add Task">Add Task</button>
+        <button type="submit" class="btn btn-custom" value="Add Task">Add Task</button>
       </form>
     </div>
-    <h3>Current Tasks</h3>
-    <div class="task-list">
-      <div class="task" ng-repeat="task in allGroupTasks | filter:{completed:false} | orderBy: '-created_at':true">
+    <div class="task-field">
+        <div class="tasks-container">
+            <p>Current Tasks</p>
+            <div class="task" ng-repeat="task in allGroupTasks | filter:{completed:false} | orderBy: '-created_at':true">
+              <div class="tasks-btn">
+                <span class="glyphicon glyphicon-ok" data="{{task._id}}" ng-click="complete(task._id)"></span>
+                <span class="glyphicon glyphicon-remove" data="{{task._id}}" ng-click="deleteById(task._id)"></span>
+              </div>
+              <div class="tasks-text">
+                {{task.name}}
+              </div>
+              <div class="tasks-time">
+                {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
+              </div>
 
-          {{task.name}} --- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
+            </div>
+        </div>
 
-        <span data="{{task._id}}" ng-click="deleteById(task._id)" style="float:right"><button class="btn btn-default">Delete</button></span>
-        <span data="{{task._id}}" ng-click="complete(task._id)" style="float:right"><button class="btn btn-default">Complete</button></span>
+      <div class="tasks-container">
+        <p>Completed Tasks</p>
+          <div class="task" ng-repeat="task in allGroupTasks | filter:{completed:true} | orderBy: '-created_at':true">
+            <div class="tasks-btn">
+              <span class="glyphicon glyphicon-remove" data="{{task._id}}" ng-click="deleteById(task._id)"></span>
+            </div>
+            <div class="tasks-text">
+              {{task.name}}
+            </div>
+            <div class="tasks-time">
+              {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
+            </div>
+        </div>
       </div>
     </div>
-
-    <hr style="background-color:black; height:5px;">
-
-    <h3>Completed Tasks</h3>
-    <div class="task-list">
-      <div class="task" ng-repeat="task in allGroupTasks | filter:{completed:true} | orderBy: '-created_at':true">
-          {{task.name}} --- {{task.createdAt | date:'HH:mm MM/dd/yyyy' }}
-        <span data="{{task._id}}" ng-click="deleteById(task._id)" style="float:right"><button class="btn btn-default">Delete</button></span>
-      </div>
-    </div>
-
   </div>
 
 </div>
-
-
-<!-- style="position: absolute; left: -9999px; width: 1px; height: 1px;" -->
-<!-- tabindex="-1" -->
